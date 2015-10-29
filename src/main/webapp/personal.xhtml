@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c='http://java.sun.com/jsp/jstl/core'>
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Personel" url="personal.xhtml"/>
+                    </p:breadCrumb>
+                </h:form>
+                <h:form id="messageBox">        
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+                
+                <!--Dialog-->
+                <p:dialog header="Personel Ekle" widgetVar="dlg3" showEffect="explode" modal="true" hideEffect="explode" height="200" width="420">
+                    <h:form>
+                        <p:panelGrid columns="2" id="saveUserForm">
+                            <p:outputLabel value="Ad:" />
+                            <p:inputText value="#{personalBean.personal.firstname}" required="true" requiredMessage="Alanını Boş Bırakmayınız..." />
+                            <p:outputLabel value="Soyad:" />
+                            <p:inputText value="#{personalBean.personal.lastname}" required="true" requiredMessage="Alanını Boş Bırakmayınız..." />
+                            <p:outputLabel value="Email:" />
+                            <p:inputText id="email" required="true" label="email" size="40"
+                                    requiredMessage="Alanını Boş Bırakmayınız..."
+                                    validatorMessage="Lütfen Geçerli Bir Email Adresi Giriniz."
+                                    value="#{personalBean.personal.email}">
+
+                              <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+                            </p:inputText>
+                            <p:outputLabel value="Cinsiyet:" />
+                            <p:selectOneRadio value="#{personalBean.personal.sex}">
+                                <f:selectItem itemLabel="Erkek" itemValue="true" />
+                                <f:selectItem itemLabel="Bayan" itemValue="false" />
+                            </p:selectOneRadio>
+                            <p:commandButton value="Kaydet" actionListener="#{personalBean.savePersonal()}" onclick="PF('dlg3').hide();" update=":tableForm:userTable,saveUserForm,:growlForm:growl" />
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                
+                
+               <!-- Dialog Bitti-->
+                
+                <h:form id="growlForm">
+                    <p:growl id="growl" showDetail="true" sticky="false" /> 
+                </h:form>
+               
+                <h:form id="tableForm">  
+                   <p:dataTable id="userTable" var="item" value="#{personalBean.personalList}"  rows="50"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="50,100,150,200,250,300"
+                        editable="true" 
+                        sortMode="multiple">
+                       <f:facet name="header">
+                           PERSONELLER      
+                           <p:commandButton value="Ekle" actionListener="#{personalBean.popupRefresh()}" icon="ui-icon-plus" type="button" style="float: left;" onclick="PF('dlg3').show();" />
+                       </f:facet>
+                       <p:ajax event="rowEdit" listener="#{personalBean.updatePersonal(item)}"  update="userTable,:growlForm:growl"  />
+                           <p:ajax event="rowEditCancel" listener="#{personalBean.onRowCancel()}" update="userTable,:growlForm:growl" />
+                           <p:column headerText="Ad" sortBy="#{item.firstname}">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.firstname}" /></f:facet>
+                                   <f:facet name="input"><p:inputText value="#{item.firstname}" style="width:100%" required="true" requiredMessage=" Alanını Boş Bırakmayınız..."  /></f:facet>
+                               </p:cellEditor>
+                           </p:column>
+
+                           <p:column headerText="Soyad" sortBy="#{item.lastname}">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.lastname}" /></f:facet>
+                                   <f:facet name="input"><p:inputText value="#{item.lastname}" style="width:100%" required="true" requiredMessage=" Alanını Boş Bırakmayınız..."  /></f:facet>
+                               </p:cellEditor>
+                           </p:column>
+
+                           <p:column headerText="Email" sortBy="#{item.email}">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.email}" /></f:facet>
+                                   <f:facet name="input"><p:inputText value="#{item.email}" style="width:100%" required="true" requiredMessage=" Alanını Boş Bırakmayınız..."  /></f:facet>
+                               </p:cellEditor>
+                           </p:column>
+
+                           <p:column headerText="Cinsiyet" sortBy="#{item.sex}">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.sex}" /></f:facet>
+                                   <f:facet name="input">
+                                       <c:choose>
+                                            <c:when test="${item.sex=='1'}">
+                                                <p:selectOneRadio value="#{item.sex}">
+                                                    <f:selectItem itemLabel="Erkek" itemValue="true" checked="cheched" />
+                                                    <f:selectItem itemLabel="Bayan" itemValue="false" />
+                                                </p:selectOneRadio>
+                                            </c:when>    
+                                            <c:otherwise>
+                                                <p:selectOneRadio value="#{item.sex}">
+                                                    <f:selectItem itemLabel="Erkek" itemValue="true" />
+                                                    <f:selectItem itemLabel="Bayan" itemValue="false" checked="cheched" />
+                                                </p:selectOneRadio>
+                                            </c:otherwise>
+                                        </c:choose>
+                                   </f:facet>
+                               </p:cellEditor>
+                           </p:column>
+
+                           <p:column style="width:70px" headerText="Düzelt">
+                               <p:rowEditor />
+                           </p:column>
+
+                           <p:column style="width:50px" headerText="Sil">
+                               <p:commandButton actionListener="#{personalBean.deletePersonal(item)}" icon="ui-icon-trash" update="userTable,:growlForm:growl">
+                                   <p:confirm header="DİKKAT" message="Silmek İstediğinize Emin misiniz?"  icon="ui-icon-alert" />
+                               </p:commandButton>
+                           </p:column>
+
+                           <f:facet name="footer">
+                               Toplam : #{fn:length(personalBean.personalList)} Kayıt Bulunmaktadır.
+                           </f:facet>
+
+                   </p:dataTable>
+
+               </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>
