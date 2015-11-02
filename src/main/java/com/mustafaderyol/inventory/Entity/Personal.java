@@ -1,19 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.mustafaderyol.inventory.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -48,6 +49,14 @@ public class Personal implements Serializable {
     
     @Column(name="SEX",nullable=false)
     private Boolean sex;
+    
+    @OneToOne
+    @JoinColumn(name="UNITFK")
+    private Unit unit;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="GROUPFK",nullable=true)
+    private List<Group> groups;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="CREATEDDATE",nullable=false)
@@ -56,15 +65,17 @@ public class Personal implements Serializable {
     public Personal() {
     }
 
-    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Date createdDate) {
+    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Unit unit, List<Group> groups, Date createdDate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.sex = sex;
+        this.unit = unit;
+        this.groups = groups;
         this.createdDate = createdDate;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -111,6 +122,22 @@ public class Personal implements Serializable {
 
     public void setSex(Boolean sex) {
         this.sex = sex;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 
     public Date getCreatedDate() {
