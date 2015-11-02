@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity(name="INVENTORY")
 @NamedQueries({
-    @NamedQuery(name="",query="SELECT a FROM INVENTORY a")
+    @NamedQuery(name="allInventory",query="SELECT a FROM INVENTORY a")
 })
 public class Inventory {
     private static final long serialVersionUID = 1L;
