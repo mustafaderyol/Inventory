@@ -78,7 +78,7 @@ public class PersonalBean {
         }
         catch(Exception e)
         {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!") );
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!"+e) );
         }
     }
     
@@ -96,7 +96,7 @@ public class PersonalBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!"+e) );
         }
     }
-    
+
     public Personal getPersonal() {
         return personal;
     }

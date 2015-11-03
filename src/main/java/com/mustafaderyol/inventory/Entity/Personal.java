@@ -51,7 +51,7 @@ public class Personal implements Serializable {
     private Boolean sex;
     
     @OneToOne
-    @JoinColumn(name="UNITFK")
+    @JoinColumn(name="UNITFK",nullable=true)
     private Unit unit;
     
     @OneToMany(cascade = CascadeType.ALL)

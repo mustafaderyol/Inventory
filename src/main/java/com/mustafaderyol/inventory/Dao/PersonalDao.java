@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mustafaderyol.inventory.Dao;
+
 import com.mustafaderyol.inventory.Entity.Personal;
 import com.mustafaderyol.inventory.IDao.IPersonalDao;
 import java.util.List;
@@ -19,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author MstfDryl
  */
 @Repository
-@Transactional(readOnly =false,propagation= Propagation.REQUIRES_NEW)
+@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 public class PersonalDao implements IPersonalDao{
     
     @PersistenceContext
@@ -40,7 +36,7 @@ public class PersonalDao implements IPersonalDao{
 
     @Override
     public List<Personal> allFunc() {
-        Query request = em.createNamedQuery("allPERSONAL");
+        Query request = em.createNamedQuery("allPersonal");
         return request.getResultList();
     }
 
