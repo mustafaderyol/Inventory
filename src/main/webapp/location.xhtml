@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c='http://java.sun.com/jsp/jstl/core'>
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Lokasyon" url="location.xhtml" />
+                    </p:breadCrumb>
+                </h:form>
+                
+                <h:form id="messageBox">        
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+                <!--Dialog-->
+                <p:dialog header="Lokasyon Ekle" widgetVar="dlg3" showEffect="explode" modal="true" hideEffect="explode" height="200" width="420">
+                    <h:form>
+                        <p:panelGrid columns="2" id="saveUserForm">
+                            <p:outputLabel value="Ad:" />
+                            <p:inputText value="#{locationBean.location.name}" required="true" requiredMessage="Alanını Boş Bırakmayınız..." />
+                            <p:commandButton value="Kaydet" actionListener="#{locationBean.saveLocation()}" onclick="PF('dlg3').hide();" update=":tableForm:userTable,saveUserForm,:growlForm:growl" />
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                
+                
+               <!-- Dialog Bitti-->
+                
+                <h:form id="growlForm">
+                    <p:growl id="growl" showDetail="true" sticky="false" /> 
+                </h:form>
+               
+                <h:form id="tableForm">  
+                    <p:dataTable id="userTable" var="item" value="#{locationBean.locationList}"  rows="50"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="50,100,150,200,250,300"
+                        editable="true" 
+                        sortMode="multiple">
+                       <f:facet name="header">
+                           LOKASYONLAR      
+                           <p:commandButton value="Ekle" actionListener="#{locationBean.popupRefresh()}" icon="ui-icon-plus" type="button" style="float: left;" onclick="PF('dlg3').show();" />
+                       </f:facet>
+                       <p:ajax event="rowEdit" listener="#{locationBean.updateLocation(item)}"  update="userTable,:growlForm:growl"  />
+                           <p:ajax event="rowEditCancel" listener="#{locationBean.onRowCancel()}" update="userTable,:growlForm:growl" />
+                           <p:column headerText="Ad" sortBy="#{item.name}">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+                                   <f:facet name="input"><p:inputText value="#{item.name}" style="width:100%" required="true" requiredMessage=" Alanını Boş Bırakmayınız..."  /></f:facet>
+                               </p:cellEditor>
+                           </p:column>
+                           
+                           <p:column headerText="#">
+                               <p:cellEditor>
+                                   <f:facet name="output"><h:outputText value="#{item.status}" /></f:facet>
+                                   <f:facet name="input">
+                                       <c:choose>
+                                            <c:when test="${item.status=='1'}">
+                                                <p:selectOneRadio value="#{item.status}">
+                                                    <f:selectItem itemLabel="Aktif" itemValue="true" checked="cheched" />
+                                                    <f:selectItem itemLabel="Pasif" itemValue="false" />
+                                                </p:selectOneRadio>
+                                            </c:when>    
+                                            <c:otherwise>
+                                                <p:selectOneRadio value="#{item.status}">
+                                                    <f:selectItem itemLabel="Aktif" itemValue="true" />
+                                                    <f:selectItem itemLabel="Pasif" itemValue="false" checked="cheched" />
+                                                </p:selectOneRadio>
+                                            </c:otherwise>
+                                        </c:choose>
+                                   </f:facet>
+                               </p:cellEditor>
+                           </p:column>
+
+                           <p:column style="width:70px" headerText="Düzelt">
+                               <p:rowEditor />
+                           </p:column>
+
+                           <p:column style="width:50px" headerText="Sil">
+                               <p:commandButton actionListener="#{locationBean.deleteLocation(item)}" icon="ui-icon-trash" update="userTable,:growlForm:growl">
+                                   <p:confirm header="DİKKAT" message="Silmek İstediğinize Emin misiniz?"  icon="ui-icon-alert" />
+                               </p:commandButton>
+                           </p:column>
+
+                           <f:facet name="footer">
+                               Toplam : #{fn:length(locationBean.locationList)} Kayıt Bulunmaktadır.
+                           </f:facet>
+
+                   </p:dataTable>
+
+               </h:form>
+
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

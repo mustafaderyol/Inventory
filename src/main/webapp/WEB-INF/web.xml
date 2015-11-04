@@ -8,10 +8,10 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring-conf.xml</param-value>
     </context-param>
-    <context-param>  
-        <param-name>primefaces.THEME</param-name>  
-        <param-value>bootstrap</param-value>  
-    </context-param>  
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
