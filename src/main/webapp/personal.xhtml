@@ -21,6 +21,7 @@
                         <p:menuitem value="Personel" url="personal.xhtml"/>
                     </p:breadCrumb>
                 </h:form>
+                <br/>
                 <h:form id="messageBox">        
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                         <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -74,7 +75,7 @@
                            PERSONELLER      
                            <p:commandButton value="Ekle" actionListener="#{personalBean.popupRefresh()}" icon="ui-icon-plus" type="button" style="float: left;" onclick="PF('dlg3').show();" />
                        </f:facet>
-                       <p:ajax event="rowEdit" listener="#{personalBean.updatePersonal(item)}"  update="userTable,:growlForm:growl"  />
+                           <p:ajax event="rowEdit" listener="#{personalBean.updatePersonal(item)}"  update="userTable,:growlForm:growl"  />
                            <p:ajax event="rowEditCancel" listener="#{personalBean.onRowCancel()}" update="userTable,:growlForm:growl" />
                            <p:column headerText="Ad" sortBy="#{item.firstname}">
                                <p:cellEditor>

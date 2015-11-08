@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <param-value>bluesky</param-value>
     </context-param>
     <listener>
         <listener-class>

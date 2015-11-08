@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Birim" url="unit.xhtml" />
+                    </p:breadCrumb>
+                </h:form>
+                <br/>
+                <h:form id="messageBox">        
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+                <h:form id="growl1">
+                    <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
+                </h:form>
+                <p:dialog header="Birim Ekle" id="dialog" widgetVar="dlg2" modal="true" height="150" width="300">
+                    <h:form id="dialogForm">
+                        <p:panelGrid columns="2" layout="grid">            
+                            <h:outputText value="Birim Adı" /> 
+                            <p:inputText value="#{unitBean.unit.name}" />
+                            
+                            <h:outputText value="Üst Birim" /> 
+                            <p:selectOneMenu id="item" value="#{unitBean.unitId}">
+                                <f:selectItem itemLabel="Üst Birim" itemValue="" />
+                                <f:selectItems value="#{unitBean.unitList}" var="theme" itemLabel="#{theme.name}" itemValue="#{theme.id}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton actionListener="#{unitBean.saveUnitFunc()}" onclick="PF('dlg2').hide();" update=":growl1:growl,:dialog,:dataTableForm" value="Kaydet"></p:commandButton>
+               
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>   
+                <h:form id="dataTableForm">
+                    <p:dataTable id="dataTable" var="item" value="#{unitBean.unitList}" editable="true" style="margin-bottom:20px">
+                        <f:facet name="header">
+                            Birim
+                            <p:commandButton actionListener="#{unitBean.popupRefresh()}" onclick="PF('dlg2').show();"  style="float: left;" update=":growl1:growl,:dialogForm" value="Ekle"></p:commandButton>
+              
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{unitBean.updateUnit(item)}" update=":growl1:growl" />
+                        <p:ajax event="rowEditCancel" listener="#{unitBean.onRowCancel}" update=":growl1:growl" />
+
+                        <p:column headerText="Birim Adı">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.name}" style="width:100%" label="Birim Adı"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Üst Birim">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.parentunit.name}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{unitBean.unitId}" style="width:100%">
+                                        <f:selectItem itemLabel="Üst Birim" itemValue="" />
+                                        <f:selectItems value="#{unitBean.unitList}" var="man" itemLabel="#{man.name}" itemValue="#{man.id}" />
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column style="width:50px" headerText="Sil">
+                            <p:commandButton actionListener="#{unitBean.deleteUnit(item)}" icon="ui-icon-trash" update="dataTable,:growl1:growl">
+                                <p:confirm header="DİKKAT" message="Silmek İstediğinize Emin misiniz?"  icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

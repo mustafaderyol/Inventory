@@ -1,12 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mustafaderyol.inventory.Beans;
 
-import com.mustafaderyol.inventory.Entity.Location;
-import com.mustafaderyol.inventory.IDao.ILocationDao;
+import com.mustafaderyol.inventory.Entity.Unit;
+import com.mustafaderyol.inventory.IDao.IUnitDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,55 +22,62 @@ import org.springframework.stereotype.Component;
  *
  * @author MstfDryl
  */
-@Component(value = "locationBean")
+@Component(value = "unitBean")
 @Scope(value = "request")
-public class LocationBean {
+public class UnitBean {
+    
     FacesContext context = FacesContext.getCurrentInstance();
     
     @Autowired
-    ILocationDao iLocationDao;
+    IUnitDao iUnitDao;
     
-    Location location;
-    List<Location> locationList = new ArrayList<Location>();
+    TreeNode root;
+    Unit unit;
+    Long unitId;
+    List<Unit> unitList = new ArrayList<Unit>();
+    
     
     @PostConstruct
     private void postConstruct() {
-        location = new Location();
-        locationList = iLocationDao.allFunc();
+        unit = new Unit();
+        unitList = iUnitDao.allFunc();
     }
     
     public void popupRefresh(){
-        location = new Location();
+        unit = new Unit();
+        unitList = iUnitDao.allFunc();
     }
     
     public void onRowCancel(){
-        locationList = iLocationDao.allFunc();
+        unitList = iUnitDao.allFunc();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "BİLGİ", "Güncelleme İşlemi İptal Edildi!"));
     }    
-
     
-    public void saveUnit(){
+     public void saveUnitFunc(){
         try
         {
-            location.setStatus(true);
-            iLocationDao.saveFunc(location);
-            locationList = iLocationDao.allFunc();
+            unit.setStatus(true);
+            unit.setParentunit(iUnitDao.findByIdFunc(this.unitId));
+            iUnitDao.saveFunc(unit);
+            unitList = iUnitDao.allFunc();
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
-            location = new Location();
+            unit = new Unit();
+          
         }
         catch(Exception e)
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!") );
         }
     }
-    
-    public void deleteLocation(Location location)
+     
+    public void updateUnit(Unit unit)
     {
         try
         {
-            iLocationDao.deleteFunc(location.getId());
-            locationList = iLocationDao.allFunc();
+            unit.setParentunit(iUnitDao.findByIdFunc(this.unitId));
+            iUnitDao.updateFunc(unit);
+            unitList = iUnitDao.allFunc();
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
            
@@ -72,13 +86,16 @@ public class LocationBean {
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!"+e) );
         }
+        
     }
     
-    public void updateLocation(Location location){
+    
+    public void deleteUnit(Unit unit)
+    {
         try
         {
-            iLocationDao.updateFunc(location);
-            locationList = iLocationDao.allFunc();
+            iUnitDao.deleteFunc(unit.getId());
+            unitList = iUnitDao.allFunc();
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
            
@@ -88,21 +105,37 @@ public class LocationBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "HATA", "İşlem Başarısız!"+e) );
         }
     }
-    
-    public Location getLocation() {
-        return location;
+
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
-    public List<Location> getLocationList() {
-        return locationList;
+    public List<Unit> getUnitList() {
+        return unitList;
     }
 
-    public void setLocationList(List<Location> locationList) {
-        this.locationList = locationList;
+    public void setUnitList(List<Unit> unitList) {
+        this.unitList = unitList;
+    }
+
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
     
 }
