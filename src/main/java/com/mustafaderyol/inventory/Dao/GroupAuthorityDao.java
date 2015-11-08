@@ -1,7 +1,8 @@
 package com.mustafaderyol.inventory.Dao;
 
+import com.mustafaderyol.inventory.Entity.GroupAuthority;
 import com.mustafaderyol.inventory.Entity.GroupEntity;
-import com.mustafaderyol.inventory.IDao.IGroupDao;
+import com.mustafaderyol.inventory.IDao.IGroupAuthorityDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,13 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
-public class GroupDao implements IGroupDao {
+public class GroupAuthorityDao implements IGroupAuthorityDao {
     
     @PersistenceContext
     EntityManager em;
 
     @Override
-    public void saveFunc(GroupEntity object) {
+    public void saveFunc(GroupAuthority object) {
         try
         {
             em.persist(object);
@@ -35,17 +36,16 @@ public class GroupDao implements IGroupDao {
     }
 
     @Override
-    public List<GroupEntity> allFunc() {
-        Query request = em.createNamedQuery("allGroup");
+    public List<GroupAuthority> allFunc() {
+        Query request = em.createNamedQuery("allGroupAuthority");
         return request.getResultList();
-        
     }
 
     @Override
     public void deleteFunc(Long id) {
         try
         {
-            em.remove(em.find(GroupEntity.class,id));
+            em.remove(em.find(GroupAuthority.class,id));
             em.flush();
         }
         catch(Exception e)
@@ -55,24 +55,30 @@ public class GroupDao implements IGroupDao {
     }
 
     @Override
-    public void updateFunc(GroupEntity object) {
+    public void updateFunc(GroupAuthority object) {
         em.merge(object);
         em.flush();
     }
 
     @Override
-    public GroupEntity findByIdFunc(Long id) {
+    public GroupAuthority findByIdFunc(Long id) {
         
-        GroupEntity p = new GroupEntity();
+        GroupAuthority p = new GroupAuthority();
         try
         {
-            p =em.find(GroupEntity.class,id);
+            p =em.find(GroupAuthority.class,id);
         }
         catch(Exception e)
         {
             System.out.print(e);
         }
         return p;
+    }
+
+    @Override
+    public List<GroupAuthority> allByGroup(GroupEntity group) {
+        Query request = em.createNamedQuery("xGroupAuthority").setParameter("group", group);
+        return request.getResultList();
     }
     
 }

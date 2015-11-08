@@ -1,6 +1,6 @@
 package com.mustafaderyol.inventory.IDao;
 
-import com.mustafaderyol.inventory.Entity.Group;
+import com.mustafaderyol.inventory.Entity.GroupEntity;
 import java.util.List;
 
 /**
@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IGroupDao {
     
-    public void saveFunc(Group object);
-    public List<Group> allFunc();
+    public void saveFunc(GroupEntity object);
+    public List<GroupEntity> allFunc();
     public void deleteFunc(Long id);
-    public void updateFunc(Group object);
-    public Group findByIdFunc(Long id);
+    public void updateFunc(GroupEntity object);
+    public GroupEntity findByIdFunc(Long id);
 }

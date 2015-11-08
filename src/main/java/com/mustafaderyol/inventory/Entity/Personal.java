@@ -56,7 +56,7 @@ public class Personal implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="GROUPFK",nullable=true)
-    private List<Group> groups;
+    private List<GroupEntity> groups;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="CREATEDDATE",nullable=false)
@@ -65,7 +65,7 @@ public class Personal implements Serializable {
     public Personal() {
     }
 
-    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Unit unit, List<Group> groups, Date createdDate) {
+    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Unit unit, List<GroupEntity> groups, Date createdDate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -132,11 +132,11 @@ public class Personal implements Serializable {
         this.unit = unit;
     }
 
-    public List<Group> getGroups() {
+    public List<GroupEntity> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Group> groups) {
+    public void setGroups(List<GroupEntity> groups) {
         this.groups = groups;
     }
 

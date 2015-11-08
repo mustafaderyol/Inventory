@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Yetki Grupları" url="group.xhtml" />
+                    </p:breadCrumb>
+                </h:form>
+                <br/>
+                
+                <h:form id="messageBox">        
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+                <h:form id="growl1">
+                    <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
+                </h:form>
+                
+                
+                <p:dialog header="Yetki Grubu Ekle" id="dialog" widgetVar="dlg2" modal="true" height="150" width="300">
+                    <h:form id="dialogForm">
+                        <p:panelGrid columns="2" layout="grid">            
+                            <h:outputText value="Yetki Grubu Adı" /> 
+                            <p:inputText value="#{groupBean.group.name}" />
+                            
+                            <p:commandButton actionListener="#{groupBean.saveGroup()}" onclick="PF('dlg2').hide();" update=":growl1:growl,:dialog,:dataTableForm" value="Kaydet"></p:commandButton>
+               
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>  
+                
+                
+                <p:dialog header="Yetkiler" id="dialog1" widgetVar="dlg1" modal="true" height="400" width="750">
+                    <h:form id="dialogForm2">
+                        <p:panelGrid layout="grid" style="width:100%; text-align: center">
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column>Yetkiler</p:column>
+                                    <p:column>Görüntüle</p:column>
+                                    <p:column>Ekle</p:column>
+                                    <p:column>Güncelle</p:column>
+                                    <p:column>Sil</p:column>
+                                    <p:column>#</p:column>
+                                </p:row>
+                            </f:facet>
+
+                            <p:row>
+                                <p:column>
+                                    <p:selectOneMenu value="#{groupAuthorityBean.authorityId}">
+                                        <f:selectItems value="#{groupAuthorityBean.authorityList}" var="p" itemLabel="#{p.name}" itemValue="#{p.id}"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <p:selectBooleanCheckbox value="#{groupAuthorityBean.groupAuthority.authoritySelect}" />
+                                </p:column>
+                                <p:column>
+                                    <p:selectBooleanCheckbox value="#{groupAuthorityBean.groupAuthority.authorityInsert}" />
+                                </p:column>
+                                <p:column>
+                                    <p:selectBooleanCheckbox value="#{groupAuthorityBean.groupAuthority.authorityUpdate}" />
+                                </p:column>
+                                <p:column>
+                                    <p:selectBooleanCheckbox value="#{groupAuthorityBean.groupAuthority.authorityDelete}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton actionListener="#{groupAuthorityBean.saveGroupAuthority(groupAuthorityBean.group)}" update=":growl1:growl,autTable" value="Kaydet"></p:commandButton>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <br/><br/>
+                        <p:dataTable id="autTable" var="itemPopup" value="#{groupAuthorityBean.groupAuthorityList}">
+                            <p:column headerText="Yetki Adı">
+                                <h:outputText value="#{itemPopup.authority.name}" />
+                            </p:column>
+
+                            <p:column headerText="Görüntüle">
+                                <h:outputText value="#{itemPopup.authoritySelect}" />
+                            </p:column>
+
+                            <p:column headerText="Ekle">
+                                <h:outputText value="#{itemPopup.authorityInsert}" />
+                            </p:column>
+
+                            <p:column headerText="Güncelle">
+                                <h:outputText value="#{itemPopup.authorityUpdate}" />
+                            </p:column>
+
+                            <p:column headerText="Sil">
+                                <h:outputText value="#{itemPopup.authorityDelete}" />
+                            </p:column>
+
+                            <p:column headerText="#">
+                                <p:commandButton actionListener="#{groupAuthorityBean.deleteGroupAuthority(itemPopup)}" update=":growl1:growl,autTable" value="Sil"></p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </p:dialog>   
+                
+                <h:form id="dataTableForm">
+                    <p:dataTable id="dataTable" var="item" value="#{groupBean.groupList}" 
+                                 rows="50"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="50,100,150,200,250,300"
+                                 editable="true" style="margin-bottom:20px">
+                        <f:facet name="header">
+                            Yetki Grupları
+                            <p:commandButton actionListener="#{groupBean.popupRefresh()}" onclick="PF('dlg2').show();"  style="float: left;" update=":growl1:growl,:dialogForm" value="Ekle"></p:commandButton>
+              
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{groupBean.updateGroup(item)}" update=":growl1:growl" />
+                        <p:ajax event="rowEditCancel" listener="#{groupBean.onRowCancel}" update=":growl1:growl" />
+
+                        <p:column headerText="Yetki Grubu Adı">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.name}" style="width:100%" label="Birim Adı"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column style="width:70px" headerText="Yetki Düzenle">
+                            <p:commandButton actionListener="#{groupAuthorityBean.popupRefresh(item.id)}" onclick="PF('dlg1').show();"  icon="ui-icon-clipboard" update="dataTable,:growl1:growl,:dialogForm2"></p:commandButton>
+                        </p:column>
+                        
+                        <p:column style="width:50px" headerText="Sil">
+                            <p:commandButton actionListener="#{groupBean.deleteGroup(item)}" icon="ui-icon-trash" update="dataTable,:growl1:growl">
+                                <p:confirm header="DİKKAT" message="Silmek İstediğinize Emin misiniz?"  icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+                
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

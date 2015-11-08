@@ -49,7 +49,12 @@
                     </h:form>
                 </p:dialog>   
                 <h:form id="dataTableForm">
-                    <p:dataTable id="dataTable" var="item" value="#{unitBean.unitList}" editable="true" style="margin-bottom:20px">
+                    <p:dataTable id="dataTable" var="item" value="#{unitBean.unitList}" 
+                                 rows="50"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="50,100,150,200,250,300"
+                                 editable="true" style="margin-bottom:20px">
                         <f:facet name="header">
                             Birim
                             <p:commandButton actionListener="#{unitBean.popupRefresh()}" onclick="PF('dlg2').show();"  style="float: left;" update=":growl1:growl,:dialogForm" value="Ekle"></p:commandButton>
