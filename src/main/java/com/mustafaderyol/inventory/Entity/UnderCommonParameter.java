@@ -16,7 +16,10 @@ import javax.persistence.OneToOne;
  */
 @Entity(name="UNDERCOMMONPARAMETER")
 @NamedQueries({
-     @NamedQuery(name="allUnderCommonParameter",query="SELECT p FROM UNDERCOMMONPARAMETER p")
+     @NamedQuery(name="allUnderCommonParameter",query="SELECT p FROM UNDERCOMMONPARAMETER p"),
+     @NamedQuery(name="allUnderCommonParameterByCategory",query="SELECT p FROM UNDERCOMMONPARAMETER p WHERE p.category = :category"),
+     @NamedQuery(name="allUnderCommonParameterByCommonParameter",query="SELECT p FROM UNDERCOMMONPARAMETER p WHERE p.commonparameter = :commonparameter"),
+     @NamedQuery(name="allUnderCommonParameterByCommonParameterAndCategory",query="SELECT p FROM UNDERCOMMONPARAMETER p WHERE p.commonparameter = :commonparameter AND p.category = :category")
 })
 public class UnderCommonParameter {
     private static final long serialVersionUID = 1L;
@@ -30,11 +33,11 @@ public class UnderCommonParameter {
     private String name;
     
     @OneToOne
-    @JoinColumn(name="CATEGORYFK")
+    @JoinColumn(name="CATEGORYFK",nullable=false)
     private Category category;
     
     @OneToOne
-    @JoinColumn(name="COMMONPARAMETERFK")
+    @JoinColumn(name="COMMONPARAMETERFK",nullable=false)
     private CommonParameter commonparameter;
     
     @Column(name="STATUS")
@@ -74,11 +77,11 @@ public class UnderCommonParameter {
         this.category = category;
     }
 
-    public CommonParameter getCommonparameter() {
+    public CommonParameter getCommonParameter() {
         return commonparameter;
     }
 
-    public void setCommonparameter(CommonParameter commonparameter) {
+    public void setCommonParameter(CommonParameter commonparameter) {
         this.commonparameter = commonparameter;
     }
 

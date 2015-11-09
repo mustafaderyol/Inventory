@@ -1,5 +1,7 @@
 package com.mustafaderyol.inventory.Dao;
 
+import com.mustafaderyol.inventory.Entity.Category;
+import com.mustafaderyol.inventory.Entity.CommonParameter;
 import com.mustafaderyol.inventory.Entity.UnderCommonParameter;
 import com.mustafaderyol.inventory.IDao.IUnderCommonParameterDao;
 import java.util.List;
@@ -73,6 +75,26 @@ public class UnderCommonParameterDao implements IUnderCommonParameterDao {
             System.out.print(e);
         }
         return p;
+    }
+
+    @Override
+    public List<UnderCommonParameter> allUnderCommonParameterByCategory(Category category) {
+        Query request = em.createNamedQuery("allUnderCommonParameterByCategory").setParameter("category", category);
+        return request.getResultList();
+    }
+
+    @Override
+    public List<UnderCommonParameter> allUnderCommonParameterByCommonParameter(CommonParameter commonparameter) {
+        
+        Query request = em.createNamedQuery("allUnderCommonParameterByCommonParameter").setParameter("commonparameter", commonparameter);
+        return request.getResultList();
+    }
+
+    @Override
+    public List<UnderCommonParameter> allUnderCommonParameterByCommonParameterAndCategory(CommonParameter commonparameter, Category category) {
+        
+        Query request = em.createNamedQuery("allUnderCommonParameterByCommonParameterAndCategory").setParameter("commonparameter", commonparameter).setParameter("category", category);
+        return request.getResultList();
     }
     
 }
