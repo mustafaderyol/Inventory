@@ -7,10 +7,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -51,11 +54,15 @@ public class Personal implements Serializable {
     private Boolean sex;
     
     @OneToOne
-    @JoinColumn(name="UNITFK",nullable=true)
+    @JoinColumn(name="PERSONALUNITFK",nullable=true)
     private Unit unit;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="GROUPFK",nullable=true)
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "PERSONALGROUP", joinColumns = { 
+                    @JoinColumn(name = "PERSONALFK", nullable = false, updatable = false) }, 
+                    inverseJoinColumns = { @JoinColumn(name = "GROUPFK", 
+                                    nullable = false, updatable = false) })
     private List<GroupEntity> groups;
 
     @Temporal(TemporalType.TIMESTAMP)

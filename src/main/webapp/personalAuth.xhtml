@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Kullanıcı Yetkilendirme" url="personalAuth.xhtml" />
+                    </p:breadCrumb>
+                </h:form>
+                <br/>
+                <h:form id="growl1">
+                    <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
+                </h:form>
+                
+                <p:dialog header="Yetki Grubu Ekle" id="dialog" widgetVar="dlg2" modal="true" height="150" width="300">
+                    <h:form id="dialogForm">
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <p:selectOneMenu value="#{personalAuthBean.personalId}">
+                                <f:selectItems value="#{personalAuthBean.personalList}" var="p" itemLabel="#{p.firstname} #{p.lastname}" itemValue="#{p.id}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu value="#{personalAuthBean.groupId}">
+                                <f:selectItems value="#{personalAuthBean.groupList}" var="p" itemLabel="#{p.name}" itemValue="#{p.id}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton actionListener="#{personalAuthBean.updatePersonal()}"  onclick="PF('dlg2').hide();" update=":growl1:growl,:dataForm:dataTabledata" value="Kaydet"></p:commandButton>
+                        </h:panelGrid>
+                       
+                    </h:form>
+                </p:dialog>  
+                
+                
+                
+                <h:form id="dataForm">
+                    <p:commandButton actionListener="#{personalAuthBean.popupRefresh()}" onclick="PF('dlg2').show();" update=":growl1:growl" value="Ekle"></p:commandButton>
+                    <br/>
+                    <p:dataTable id="dataTabledata" var="personal" value="#{personalAuthBean.personalList}">
+                        <f:facet name="header">
+                            Kullanıcılar
+                        </f:facet>
+
+                        <p:column headerText="Personel Adı Soyadı">
+                            <h:outputText value="#{personal.firstname} #{personal.lastname}" />
+                        </p:column>
+
+                        <p:column headerText="Email">
+                            <h:outputText value="#{personal.email}" />
+                        </p:column>
+                        
+                        <p:column headerText="Yetki Grupları">
+                            <p:dataTable var="group" value="#{personal.groups}">
+                                <p:column headerText="Grup Adı">
+                                    <h:outputText value="#{group.name}" />
+                                </p:column>
+
+                                <p:column headerText="#" style="width:50px;">
+                                    <p:commandButton actionListener="#{personalAuthBean.deletePersonalGroup(personal, group)}" update=":growl1:growl,:dataForm:dataTabledata" value="Sil"></p:commandButton>
+                        
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:column>
+                    </p:dataTable>
+                    
+                </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>
