@@ -37,9 +37,6 @@ public class Parameter {
     @Column(name="NAME",nullable=false,length=60)
     private String name;
     
-    @Column(name="TEXT",nullable=true)
-    private String text;
-    
     //Select = true, Text = false
     @Column(name="SELECTORTEXT")
     private Boolean selectortext;
@@ -50,11 +47,10 @@ public class Parameter {
     public Parameter() {
     }
 
-    public Parameter(Category category, Parameter parentparameter, String name, String text, Boolean selectortext, Boolean status) {
+    public Parameter(Category category, Parameter parentparameter, String name, Boolean selectortext, Boolean status) {
         this.category = category;
         this.parentparameter = parentparameter;
         this.name = name;
-        this.text = text;
         this.selectortext = selectortext;
         this.status = status;
     }
@@ -89,14 +85,6 @@ public class Parameter {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public Boolean getSelectortext() {

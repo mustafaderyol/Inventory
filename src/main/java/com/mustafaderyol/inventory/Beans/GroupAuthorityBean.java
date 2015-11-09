@@ -63,7 +63,7 @@ public class GroupAuthorityBean {
             groupAuthority.setGroup(group);
             groupAuthority.setAuthority(iAuthorityDao.findByIdFunc(authorityId));
             iGroupAuthorityDao.saveFunc(groupAuthority);
-            groupAuthorityList = iGroupAuthorityDao.allFunc();
+            groupAuthorityList = iGroupAuthorityDao.allByGroup(group);
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
             groupAuthority = new GroupAuthority();
