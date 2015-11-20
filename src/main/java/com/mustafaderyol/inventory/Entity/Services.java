@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  */
 @Entity(name="SERVICES")
 @NamedQueries({
-    @NamedQuery(name="allServices",query="SELECT g FROM SERVICES g")
+    @NamedQuery(name="allServicesByInventory",query="SELECT g FROM SERVICES g WHERE g.inventory = :inventory")
 })
 public class Services {
     private static final long serialVersionUID = 1L;
@@ -30,8 +30,8 @@ public class Services {
     private Long id;
     
     @OneToOne
-    @JoinColumn(name="CATEGORYFK")
-    private Category category;
+    @JoinColumn(name="INVENTORYFK")
+    private Inventory inventory;
     
     @OneToOne
     @JoinColumn(name="MOVEMENTHISTORYFK")
@@ -57,8 +57,8 @@ public class Services {
     public Services() {
     }
 
-    public Services(Category category, MovementHistory movementhistory, Date goDate, String goNote, Date comeDate, String comeNote, Boolean status) {
-        this.category = category;
+    public Services(Inventory inventory, MovementHistory movementhistory, Date goDate, String goNote, Date comeDate, String comeNote, Boolean status) {
+        this.inventory = inventory;
         this.movementhistory = movementhistory;
         this.goDate = goDate;
         this.goNote = goNote;
@@ -75,14 +75,14 @@ public class Services {
         this.id = id;
     }
 
-    public Category getCategory() {
-        return category;
+    public Inventory getInventory() {
+        return inventory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
-
+    
     public MovementHistory getMovementhistory() {
         return movementhistory;
     }

@@ -33,7 +33,16 @@
                     <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
                 </h:form>
                 <br/>
-                <p:dialog header="Detay" id="dialog" widgetVar="dlg2" modal="true" height="450" width="600">
+                <p:dialog header="Servisi Kapat" widgetVar="dlg1" modal="true" height="120" width="300" id="servicesDialog">
+                    <h:form id="servicesDialogForm">
+                        <h:outputText value="Açıklama:" /><br/>
+                        <p:inputTextarea value="#{inventoryPageBean.services.comeNote}" style="width: 100%"/><br/>
+                        <p:commandButton actionListener="#{inventoryPageBean.closeServices(inventoryPageBean.services)}" onclick="PF('dlg1').hide();" update=":growl1:growl,:dialogInventoryForm" value="Servisi Kapat"></p:commandButton>
+               
+                    </h:form>
+                </p:dialog>   
+
+                <p:dialog header="Detay" id="dialog" widgetVar="dlg2" modal="true" height="600" width="960">
                     <h:form id="dialogInventoryForm">
                         
                         <p:tabView>
@@ -46,7 +55,7 @@
                                         </p:column>
 
                                         <p:column rowspan="4" colspan="2" style="width: 100px; text-align: center;">
-                                             </p:column>
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column style="font-weight: bold;">Personel :</p:column>
@@ -124,10 +133,7 @@
                                 
                             </p:tab>
                             <p:tab title="İlişki">
-                                <h:panelGrid columns="2" cellpadding="10">
-                                    <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                                    <h:outputText value="Francis Ford Coppola's legendary..." />
-                                </h:panelGrid>
+                                
                             </p:tab>
                             <p:tab title="Hareket Geçmişi">
                                 <p:panelGrid>
@@ -208,10 +214,73 @@
                                 </h:panelGrid>
                             </p:tab>
                             <p:tab title="Servis Geçmişi">
-                                <h:panelGrid columns="2" cellpadding="10">
-                                    <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                                    <h:outputText value="After a break of more than 15 years..." />
-                                </h:panelGrid>
+                                <h:form id="servicesHistoryTabForm">
+                                <h:panelGroup rendered="#{empty inventoryPageBean.servicesList || not empty inventoryPageBean.servicesList.get(inventoryPageBean.servicesList.size()-1).comeDate}">
+                                    <p:outputLabel value="Açıklama:"/>  <br/>
+                                    <p:inputTextarea style="width: 100%" value="#{inventoryPageBean.services2.goNote}" required="required" /> <br/>
+                                    
+                                    <p:commandButton value="Servis Aç"  actionListener="#{inventoryPageBean.saveServices()}" update=":growl1:growl,servicesHistoryTabForm,:dialogInventoryForm" />
+                                </h:panelGroup>
+                                
+                                <p:dataList id="servicesHistoryTab" value="#{inventoryPageBean.servicesList}" var="sb" type="definition">
+                                    <p:panelGrid style="width: 100%;">
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Personel :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{sb.movementhistory.personal.firstname} #{sb.movementhistory.personal.lastname}"/>
+                                                </p:column>
+                                                <p:column style="font-weight: bold;">Lokasyon :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{sb.movementhistory.location.name}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Birim :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.movementhistory.unit.name}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.movementhistory.locationdetail}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Teslim Tarihi :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.goDate}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Teslim Notu :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.goNote}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Gelen Tarih :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.comeDate}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Gelen Not :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{sb.comeNote}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="4" styleClass="ui-widget-header">
+                                                    <p:spacer height="0"/>
+                                                    <h:panelGroup rendered="#{empty sb.comeDate}">
+                                                        <p:commandButton value="Servisi Kapat" onclick="PF('dlg1').show();" actionListener="#{inventoryPageBean.selectServices(sb)}" update=":growl1:growl,:servicesDialogForm" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                    </p:panelGrid>
+                                </p:dataList>
+                                </h:form>
                             </p:tab>
                         </p:tabView>
                         

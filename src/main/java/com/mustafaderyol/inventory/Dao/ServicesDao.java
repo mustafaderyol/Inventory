@@ -1,5 +1,6 @@
 package com.mustafaderyol.inventory.Dao;
 
+import com.mustafaderyol.inventory.Entity.Inventory;
 import com.mustafaderyol.inventory.Entity.Services;
 import com.mustafaderyol.inventory.IDao.IServicesDao;
 import java.util.List;
@@ -35,8 +36,8 @@ public class ServicesDao implements IServicesDao {
     }
 
     @Override
-    public List<Services> allFunc() {
-        Query request = em.createNamedQuery("allServices");
+    public List<Services> allServicesByInventory(Inventory inventory) {
+        Query request = em.createNamedQuery("allServicesByInventory").setParameter("inventory", inventory);
         return request.getResultList();
         
     }
