@@ -55,6 +55,7 @@
                                         </p:column>
 
                                         <p:column rowspan="4" colspan="2" style="width: 100px; text-align: center;">
+                                            <p:barcode value="#{inventoryPageBean.getQrCodeGenerator(inventoryPageBean.inventory.id)}" type="qr"/>
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -314,7 +315,8 @@
                     </f:facet>
 
                     <p:column headerText="" style="width:120px; padding: 0px;">
-                       </p:column>
+                        <p:barcode value="#{inventoryPageBean.getQrCodeGenerator(item.id)}" type="qr"/>
+                    </p:column>
                     
                     <p:column headerText="Envanter No" style="width:120px;">
                         <h:outputText value="#{inventoryPageBean.getQrCodeGenerator(item.id)}"/>

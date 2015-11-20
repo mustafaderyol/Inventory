@@ -36,7 +36,7 @@
                 
                 <p:dialog header="Yetki Grubu Ekle" id="dialog" widgetVar="dlg2" modal="true" height="150" width="300">
                     <h:form id="dialogForm">
-                        <p:panelGrid columns="2" layout="grid">            
+                        <p:panelGrid columns="2">            
                             <h:outputText value="Yetki Grubu Adı" /> 
                             <p:inputText value="#{groupBean.group.name}" />
                             
@@ -49,7 +49,7 @@
                 
                 <p:dialog header="Yetkiler" id="dialog1" widgetVar="dlg1" modal="true" height="400" width="750">
                     <h:form id="dialogForm2">
-                        <p:panelGrid layout="grid" style="width:100%; text-align: center">
+                        <p:panelGrid style="width:100%; text-align: center">
                             <f:facet name="header">
                                 <p:row>
                                     <p:column>Yetkiler</p:column>
