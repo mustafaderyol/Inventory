@@ -133,7 +133,41 @@
                                 
                             </p:tab>
                             <p:tab title="İlişki">
+                                <p:selectOneMenu value="#{inventoryPageBean.inventoryId}">
+                                    <f:selectItems value="#{inventoryPageBean.inventoryList2}" var="il" itemLabel="#{inventoryPageBean.getQrCodeGenerator(il.id)}" itemValue="#{il.id}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="İlişkilendir"  actionListener="#{inventoryPageBean.addRelationship}" update=":growl1:growl,:dialogInventoryForm" />
+                                <br/>
                                 
+                                
+                                <p:dataList  value="#{inventoryPageBean.inventoryRelationshipList1}" var="ir1" type="definition">
+                                    <f:facet name="header">
+                                        Bu Envanterin Bağlı Olduğu Envanterler
+                                    </f:facet>
+                                    <p:panelGrid style="width: 100%;">
+                                            <p:row>
+                                                <p:column>
+                                                    <h:outputText value="#{inventoryPageBean.getQrCodeGenerator(ir1.inventory2.id)}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <p:commandButton value="Sil"  actionListener="#{inventoryPageBean.deleteRelationship(ir1.id)}" update=":growl1:growl,:dialogInventoryForm" />
+                                                </p:column>
+                                            </p:row>
+                                    </p:panelGrid>
+                                </p:dataList>
+                                
+                                <p:dataList  value="#{inventoryPageBean.inventoryRelationshipList2}" var="ir2" type="definition">
+                                    <f:facet name="header">
+                                        Bu Envantere Bağlı Olan Envanterler
+                                    </f:facet>
+                                    <p:panelGrid style="width: 100%;">
+                                            <p:row>
+                                                <p:column>
+                                                    <h:outputText value="#{inventoryPageBean.getQrCodeGenerator(ir2.inventory1.id)}"/>
+                                                </p:column>
+                                            </p:row>
+                                    </p:panelGrid>
+                                </p:dataList>
                             </p:tab>
                             <p:tab title="Hareket Geçmişi">
                                     <p:selectOneMenu value="#{inventoryPageBean.personalId}">
@@ -186,12 +220,6 @@
                                                 </p:row>
                                         </p:panelGrid>
                                     </p:dataList>
-                            </p:tab>
-                            <p:tab title="Emanet Geçmişi">
-                                <h:panelGrid columns="2" cellpadding="10">
-                                    <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                                    <h:outputText value="Francis Ford Coppola's legendary..." />
-                                </h:panelGrid>
                             </p:tab>
                             <p:tab title="Servis Geçmişi">
                                 <h:form id="servicesHistoryTabForm">

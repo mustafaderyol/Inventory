@@ -2,6 +2,7 @@ package com.mustafaderyol.inventory.Beans;
 
 import com.mustafaderyol.inventory.Entity.Category;
 import com.mustafaderyol.inventory.Entity.Inventory;
+import com.mustafaderyol.inventory.Entity.InventoryRelationship;
 import com.mustafaderyol.inventory.Entity.Location;
 import com.mustafaderyol.inventory.Entity.MovementHistory;
 import com.mustafaderyol.inventory.Entity.Personal;
@@ -9,6 +10,7 @@ import com.mustafaderyol.inventory.Entity.Services;
 import com.mustafaderyol.inventory.Entity.Unit;
 import com.mustafaderyol.inventory.IDao.ICategoryDao;
 import com.mustafaderyol.inventory.IDao.IInventoryDao;
+import com.mustafaderyol.inventory.IDao.IInventoryRelationshipDao;
 import com.mustafaderyol.inventory.IDao.ILocationDao;
 import com.mustafaderyol.inventory.IDao.IMovementHistoryDao;
 import com.mustafaderyol.inventory.IDao.IPersonalDao;
@@ -56,6 +58,13 @@ public class InventoryPageBean {
     @Autowired
     IServicesDao iServicesDao;
     
+    @Autowired
+    IInventoryRelationshipDao iInventoryRelationshipDao;
+    
+    InventoryRelationship inventoryRelationship;
+    List<InventoryRelationship> inventoryRelationshipList1 = new ArrayList<InventoryRelationship>();
+    List<InventoryRelationship> inventoryRelationshipList2 = new ArrayList<InventoryRelationship>();
+    
     List<Personal> personalList = new ArrayList<Personal>();
     List<Unit> unitList = new ArrayList<Unit>();
     List<Location> locationList = new ArrayList<Location>();
@@ -65,7 +74,9 @@ public class InventoryPageBean {
     
     Category category;
     Inventory inventory;
+    Long inventoryId;
     List<Inventory> inventoryList = new ArrayList<Inventory>();
+    List<Inventory> inventoryList2 = new ArrayList<Inventory>();
     
     Long personalId,locationId,unitId;
     MovementHistory movementHistory;
@@ -77,6 +88,7 @@ public class InventoryPageBean {
         services = new Services();
         services2 = new Services();
         movementHistory = new MovementHistory();
+        inventoryRelationship = new InventoryRelationship();
     }
     
     public String getUrlParameter()
@@ -104,6 +116,9 @@ public class InventoryPageBean {
         unitList = iUnitDao.allFunc();
         locationList = iLocationDao.allFunc();
         servicesList = iServicesDao.allServicesByInventory(this.inventory);
+        inventoryRelationshipList1 = iInventoryRelationshipDao.allFuncLeft(this.inventory);
+        inventoryRelationshipList2 = iInventoryRelationshipDao.allFuncRight(this.inventory);
+        inventoryList2 = iInventoryDao.allFunc();
     }
     
     public void deleteInventory(Inventory inventory)
@@ -167,7 +182,25 @@ public class InventoryPageBean {
         this.movementHistory = new MovementHistory();
     }
     
+    public void deleteRelationship(Long id)
+    {
+        iInventoryRelationshipDao.deleteFunc(id);
+        inventoryRelationshipList1 = iInventoryRelationshipDao.allFuncLeft(this.inventory);
+        inventoryRelationshipList2 = iInventoryRelationshipDao.allFuncRight(this.inventory);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
+        this.inventoryRelationship = new InventoryRelationship();
+    }
     
+    public void addRelationship()
+    {
+        this.inventoryRelationship.setInventory1(this.inventory);
+        this.inventoryRelationship.setInventory2(iInventoryDao.findByIdFunc(this.inventoryId));
+        iInventoryRelationshipDao.saveFunc(this.inventoryRelationship);
+        inventoryRelationshipList1 = iInventoryRelationshipDao.allFuncLeft(this.inventory);
+        inventoryRelationshipList2 = iInventoryRelationshipDao.allFuncRight(this.inventory);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
+        this.inventoryRelationship = new InventoryRelationship();
+    }
     
     public Category getCategory() {
         return category;
@@ -271,5 +304,45 @@ public class InventoryPageBean {
 
     public void setLocationList(List<Location> locationList) {
         this.locationList = locationList;
+    }
+
+    public InventoryRelationship getInventoryRelationship() {
+        return inventoryRelationship;
+    }
+
+    public void setInventoryRelationship(InventoryRelationship inventoryRelationship) {
+        this.inventoryRelationship = inventoryRelationship;
+    }
+
+    public List<InventoryRelationship> getInventoryRelationshipList1() {
+        return inventoryRelationshipList1;
+    }
+
+    public void setInventoryRelationshipList1(List<InventoryRelationship> inventoryRelationshipList1) {
+        this.inventoryRelationshipList1 = inventoryRelationshipList1;
+    }
+
+    public List<InventoryRelationship> getInventoryRelationshipList2() {
+        return inventoryRelationshipList2;
+    }
+
+    public void setInventoryRelationshipList2(List<InventoryRelationship> inventoryRelationshipList2) {
+        this.inventoryRelationshipList2 = inventoryRelationshipList2;
+    }
+
+    public Long getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(Long inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public List<Inventory> getInventoryList2() {
+        return inventoryList2;
+    }
+
+    public void setInventoryList2(List<Inventory> inventoryList2) {
+        this.inventoryList2 = inventoryList2;
     }
 }
