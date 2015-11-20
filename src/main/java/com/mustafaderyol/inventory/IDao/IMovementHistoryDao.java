@@ -8,7 +8,7 @@ import java.util.List;
  * @author MstfDryl
  */
 public interface IMovementHistoryDao {
-    public void saveFunc(MovementHistory object);
+    public MovementHistory saveFunc(MovementHistory object);
     public List<MovementHistory> allFunc();
     public void deleteFunc(Long id);
     public void updateFunc(MovementHistory object);

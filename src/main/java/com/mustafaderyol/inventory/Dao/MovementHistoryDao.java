@@ -22,7 +22,7 @@ public class MovementHistoryDao implements IMovementHistoryDao {
     EntityManager em;
 
     @Override
-    public void saveFunc(MovementHistory object) {
+    public MovementHistory saveFunc(MovementHistory object) {
         try
         {
             em.persist(object);
@@ -32,6 +32,7 @@ public class MovementHistoryDao implements IMovementHistoryDao {
         {
             System.out.print(e);
         }
+        return object;
     }
 
     @Override

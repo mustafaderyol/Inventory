@@ -42,7 +42,7 @@ public class LocationBean {
     }    
 
     
-    public void saveUnit(){
+    public void saveLocation(){
         try
         {
             location.setStatus(true);

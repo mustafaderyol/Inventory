@@ -16,7 +16,10 @@ import javax.persistence.OneToOne;
  */
 @Entity(name="PARAMETER")
 @NamedQueries({
-     @NamedQuery(name="allParameter",query="SELECT p FROM PARAMETER p")
+     @NamedQuery(name="allParameter",query="SELECT p FROM PARAMETER p"),
+     @NamedQuery(name="allParameterByCategory",query="SELECT p FROM PARAMETER p WHERE p.category = :category AND p.parentparameter IS NULL"),
+     @NamedQuery(name="allParameterByParentParameter",query="SELECT p FROM PARAMETER p WHERE p.parentparameter = :parentparameter"),
+     @NamedQuery(name="allParameterByParentParameterByCategory",query="SELECT p FROM PARAMETER p WHERE p.parentparameter = :parentparameter AND p.category= :category")
 })
 public class Parameter {
     private static final long serialVersionUID = 1L;

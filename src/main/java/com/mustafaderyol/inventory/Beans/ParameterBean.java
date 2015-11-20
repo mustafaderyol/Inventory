@@ -31,8 +31,8 @@ public class ParameterBean {
     ICategoryDao iCategoryDao;
     
     Parameter parameter;
-    Long parameterId;
-    Long categoryId;
+    Long parameterId,parameterId2;
+    Long categoryId,categoryId2;
     List<Parameter> parameterList = new ArrayList<Parameter>();
     List<Category> categoryList = new ArrayList<Category>();
     
@@ -41,6 +41,7 @@ public class ParameterBean {
     private void postConstruct() {
         parameter = new Parameter();
         parameterList  = iParameterDao.allFunc();
+        categoryList = iCategoryDao.allFunc();
     }
     
     public void popupRefresh(){
@@ -73,12 +74,12 @@ public class ParameterBean {
         }
     }
      
-    public void updateParameter(Parameter paramater)
+    public void updateParameter(Parameter parameter)
     {
         try
         {
-            parameter.setCategory(iCategoryDao.findByIdFunc(categoryId));
-            parameter.setParentparameter(iParameterDao.findByIdFunc(parameterId));
+            parameter.setCategory(iCategoryDao.findByIdFunc(categoryId2));
+            parameter.setParentparameter(iParameterDao.findByIdFunc(parameterId2));
             iParameterDao.updateFunc(parameter);
             parameterList = iParameterDao.allFunc();
             
@@ -147,6 +148,22 @@ public class ParameterBean {
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public Long getParameterId2() {
+        return parameterId2;
+    }
+
+    public void setParameterId2(Long parameterId2) {
+        this.parameterId2 = parameterId2;
+    }
+
+    public Long getCategoryId2() {
+        return categoryId2;
+    }
+
+    public void setCategoryId2(Long categoryId2) {
+        this.categoryId2 = categoryId2;
     }
     
 }

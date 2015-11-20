@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="#{inventoryPageBean.urlParameter}" url="dashboard.xhtml"  >  
+                        </p:menuitem>
+                    </p:breadCrumb>
+                </h:form>
+                
+                <h:form id="messageBox">        
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+                <h:form id="growl1">
+                    <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
+                </h:form>
+                <br/>
+                <p:dialog header="Detay" id="dialog" widgetVar="dlg2" modal="true" height="450" width="600">
+                    <h:form id="dialogInventoryForm">
+                        
+                        <p:tabView>
+                            <p:tab title="Genel">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Envanter No:</p:column>
+                                        <p:column>
+                                            <h:outputText value="#{inventoryPageBean.getQrCodeGenerator(inventoryPageBean.inventory.id)}"/>
+                                        </p:column>
+
+                                        <p:column rowspan="4" colspan="2" style="width: 100px; text-align: center;">
+                                             </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Personel :</p:column>
+                                        <p:column>
+                                            <h:outputText value="#{inventoryPageBean.inventory.movementHistory.get(inventoryPageBean.inventory.movementHistory.size()-1).personal.firstname} #{inventoryPageBean.inventory.movementHistory.get(inventoryPageBean.inventory.movementHistory.size()-1).personal.lastname}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Birim :</p:column>
+                                        <p:column>
+                                            <h:outputText value="#{inventoryPageBean.inventory.movementHistory.get(inventoryPageBean.inventory.movementHistory.size()-1).unit.name}"/>
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Lokasyon :</p:column>
+                                        <p:column>
+                                            <h:outputText value="#{inventoryPageBean.inventory.movementHistory.get(inventoryPageBean.inventory.movementHistory.size()-1).location.name}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
+                                        <p:column colspan="3">
+                                            <h:outputText value="#{inventoryPageBean.inventory.movementHistory.get(inventoryPageBean.inventory.movementHistory.size()-1).locationdetail}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Not :</p:column>
+                                        <p:column colspan="3">
+                                            <h:outputText value="#{inventoryPageBean.inventory.note}"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <br/>
+                                <div class="ui-grid ui-grid-responsive">
+                                    <div class="ui-grid-row">
+                                        <div class="ui-grid-col-6" style="width: 50%; float: left;">
+                                            <p:dataList  style="width: 50%; float: left;" value="#{inventoryPageBean.inventory.inventoryDetailParameter}" var="p" type="definition">
+                                                <f:facet name="header">
+                                                    Parametreler
+                                                </f:facet>
+                                                <p:panelGrid style="width: 100%;">
+                                                    <p:row>
+                                                       <p:column style="font-weight: bold; width: 50%;">
+                                                           <h:outputText value="#{p.parameter.name}"/>
+                                                       </p:column>
+                                                       <p:column>
+                                                           <h:outputText value="#{p.answerparameter.name}"/>
+                                                           <h:outputText value="#{p.text}"/>
+                                                       </p:column>
+                                                   </p:row>
+                                                </p:panelGrid>
+                                            </p:dataList>
+                                        </div>
+                                        <div class="ui-grid-col-6" style="width: 50%; float: left;">
+                                            <p:dataList  style="width: 50%; float: left;" value="#{inventoryPageBean.inventory.inventoryDetailCommonParameter}" var="p" type="definition">
+                                                <f:facet name="header">
+                                                   Ortak Parametreler
+                                                </f:facet>
+                                                <p:panelGrid style="width: 100%;">
+                                                    <p:row>
+                                                       <p:column style="font-weight: bold; width: 50%;">
+                                                           <h:outputText value="#{p.commonparameter.name}"/>
+                                                       </p:column>
+                                                       <p:column>
+                                                           <h:outputText value="#{p.undercommonparameter.name}"/>
+                                                           <h:outputText value="#{p.text}"/>
+                                                       </p:column>
+                                                   </p:row>
+                                                </p:panelGrid>
+                                            </p:dataList>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </p:tab>
+                            <p:tab title="İlişki">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                                    <h:outputText value="Francis Ford Coppola's legendary..." />
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Hareket Geçmişi">
+                                <p:panelGrid>
+                                    <ui:repeat value="#{inventoryPageBean.inventory.movementHistory}" var="mh">
+                                        <p:row>
+                                            <p:column style="font-weight: bold;">Personel :</p:column>
+                                            <p:column>
+                                                <h:outputText value="#{mh.personal.firstname} #{mh.personal.lastname}"/>
+                                            </p:column>
+                                            <p:column style="font-weight: bold;">Lokasyon :</p:column>
+                                            <p:column>
+                                                <h:outputText value="#{mh.location.name}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column style="font-weight: bold;">Birim :</p:column>
+                                            <p:column>
+                                                <h:outputText value="#{mh.unit.name}"/>
+                                            </p:column>
+                                            <p:column style="font-weight: bold;">Tarih :</p:column>
+                                            <p:column>
+                                                <h:outputText value="#{mh.createdDate}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
+                                            <p:column colspan="3">
+                                                <h:outputText value="#{mh.locationdetail}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="4" styleClass="ui-widget-header">
+                                                <p:spacer height="0"/>
+                                            </p:column>
+                                        </p:row>
+                                    </ui:repeat>
+                                </p:panelGrid>
+                                <p:dataList  value="#{inventoryPageBean.inventory.movementHistory}" var="mh" type="definition">
+                                    <p:panelGrid style="width: 100%;">
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Personel :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{mh.personal.firstname} #{mh.personal.lastname}"/>
+                                                </p:column>
+                                                <p:column style="font-weight: bold;">Lokasyon :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{mh.location.name}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Birim :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{mh.unit.name}"/>
+                                                </p:column>
+                                                <p:column style="font-weight: bold;">Tarih :</p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{mh.createdDate}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
+                                                <p:column colspan="3">
+                                                    <h:outputText value="#{mh.locationdetail}"/>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="4" styleClass="ui-widget-header">
+                                                    <p:spacer height="0"/>
+                                                </p:column>
+                                            </p:row>
+                                    </p:panelGrid>
+                                </p:dataList>
+                            </p:tab>
+                            <p:tab title="Emanet Geçmişi">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                                    <h:outputText value="Francis Ford Coppola's legendary..." />
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Servis Geçmişi">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                                    <h:outputText value="After a break of more than 15 years..." />
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+                        
+                    </h:form>
+                </p:dialog>   
+                
+                
+                
+                <h:form id="dataFormInventory">
+                <p:dataTable var="item" value="#{inventoryPageBean.inventoryListByCategory}" rows="20"
+                         paginator="true"
+                         id="dataTable"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="20,40,100">
+                    <f:facet name="header">
+                        #{inventoryPageBean.category.name}
+                        
+                        <h:outputLink class="btn btn-sm btn-info" value="createinventory.xhtml" style="float: left;">
+                            <h:outputText value="Ekle" />
+                            <f:param name="category" value="#{inventoryPageBean.category.id}" />
+                        
+                        </h:outputLink>
+                    </f:facet>
+
+                    <p:column headerText="" style="width:120px; padding: 0px;">
+                       </p:column>
+                    
+                    <p:column headerText="Envanter No" style="width:120px;">
+                        <h:outputText value="#{inventoryPageBean.getQrCodeGenerator(item.id)}"/>
+                    </p:column>
+
+                    <p:column headerText="Not" style="width:120px; padding: 0px;">
+                        <h:outputText value="#{item.note}" />
+                    </p:column>
+                    
+                    <p:column headerText="Personel">
+                        <h:outputText value="#{item.movementHistory.get(item.movementHistory.size()-1).personal.firstname} #{item.movementHistory.get(item.movementHistory.size()-1).personal.lastname}" />
+                    </p:column>
+
+                    <p:column headerText="Birim">
+                        <h:outputText value="#{item.movementHistory.get(item.movementHistory.size()-1).unit.name}" />
+                    </p:column>
+
+                    <p:column headerText="Lokasyon">
+                        <h:outputText value="#{item.movementHistory.get(item.movementHistory.size()-1).location.name}" />
+                    </p:column>
+
+                    <p:column headerText="Lokasyon Detay">
+                        <h:outputText value="#{item.movementHistory.get(item.movementHistory.size()-1).locationdetail}" />
+                    </p:column>
+                        
+                    <p:column headerText="">
+                        <p:commandButton value="Detay" onclick="PF('dlg2').show();" actionListener="#{inventoryPageBean.inventoryDetail(item)}" update=":growl1:growl,:dialogInventoryForm" />
+                    </p:column>
+                    
+                    <p:column style="width:50px" headerText="Sil">
+                        <p:commandButton actionListener="#{inventoryPageBean.deleteInventory(item)}" icon="ui-icon-trash" update="dataTable,:growl1:growl">
+                            <p:confirm header="DİKKAT" message="Silmek İstediğinize Emin misiniz?"  icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        Toplam : #{fn:length(inventoryPageBean.inventoryList)}
+                    </f:facet>
+                </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

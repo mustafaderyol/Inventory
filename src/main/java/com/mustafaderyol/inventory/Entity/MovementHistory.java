@@ -30,10 +30,6 @@ public class MovementHistory {
     private Long id;
     
     @OneToOne
-    @JoinColumn(name="INVENTORYFK")
-    private Inventory inventory;
-    
-    @OneToOne
     @JoinColumn(name="PERSONALFK")
     private Personal personal;
     
@@ -59,8 +55,7 @@ public class MovementHistory {
     public MovementHistory() {
     }
 
-    public MovementHistory(Inventory inventory, Personal personal, Unit unit, Location location, String locationdetail, Date createdDate, Boolean status) {
-        this.inventory = inventory;
+    public MovementHistory(Personal personal, Unit unit, Location location, String locationdetail, Date createdDate, Boolean status) {
         this.personal = personal;
         this.unit = unit;
         this.location = location;
@@ -76,15 +71,7 @@ public class MovementHistory {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
+    
     public Personal getPersonal() {
         return personal;
     }

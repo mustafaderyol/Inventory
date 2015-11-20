@@ -5,16 +5,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -22,7 +22,8 @@ import javax.persistence.TemporalType;
  */
 @Entity(name="INVENTORY")
 @NamedQueries({
-    @NamedQuery(name="allInventory",query="SELECT a FROM INVENTORY a")
+    @NamedQuery(name="allInventory",query="SELECT a FROM INVENTORY a"),
+    @NamedQuery(name="allInventoryByCategoryId",query="SELECT a FROM INVENTORY a WHERE a.category = :category ")
 })
 public class Inventory {
     private static final long serialVersionUID = 1L;
@@ -36,44 +37,41 @@ public class Inventory {
     @JoinColumn(name="CATEGORYFK")
     private Category category;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="PARAMETERFK")
-    private List<Parameter> parameters;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "INVENTORYDETAILPARAMETERJOINTABLE", joinColumns = { 
+                    @JoinColumn(name = "INVENTORYFK", nullable = false, updatable = false) }, 
+                    inverseJoinColumns = { @JoinColumn(name = "INVENTORYDETAILPARAMETERFK", 
+                                    nullable = false, updatable = false) })
+    private List<InventoryDetailParameter> inventoryDetailParameter;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="UNDERPARAMETERFK",nullable=true)
-    private List<Parameter> underparameters;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="COMMONPARAMETERFK")
-    private List<CommonParameter> commonparameters;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "INVENTORYDETAILCOMMONPARAMETERJOINTABLE", joinColumns = { 
+                    @JoinColumn(name = "INVENTORYFK", nullable = false, updatable = false) }, 
+                    inverseJoinColumns = { @JoinColumn(name = "INVENTORYDETAILCOMMONPARAMETERFK", 
+                                    nullable = false, updatable = false) })
+    private List<InventoryDetailCommonParameter> inventoryDetailCommonParameter;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="UNDERCOMMONPARAMETERFK",nullable=true)
-    private List<UnderCommonParameter> undercommonparameters;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="CREATEDDATE",nullable=false)
-    private Date createdDate;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "MOVEMENTHISTORYJOINTABLE", joinColumns = { 
+                    @JoinColumn(name = "INVENTORYFK", nullable = false, updatable = false) }, 
+                    inverseJoinColumns = { @JoinColumn(name = "MOVEMENTHISTORYFK", 
+                                    nullable = false, updatable = false) })
+    private List<MovementHistory> movementHistory;
     
     @Column(name="NOTE",nullable=true,length=1000)
     private String note;
     
-    @Column(name="STATUS")
-    private Boolean status;
 
     public Inventory() {
     }
 
-    public Inventory(Category category, List<Parameter> parameters, List<Parameter> underparameters, List<CommonParameter> commonparameters, List<UnderCommonParameter> undercommonparameters, Date createdDate, String note, Boolean status) {
+    public Inventory(Category category, List<InventoryDetailParameter> inventoryDetailParameter, List<InventoryDetailCommonParameter> inventoryDetailCommonParameter, List<MovementHistory> movementHistory, String note) {
         this.category = category;
-        this.parameters = parameters;
-        this.underparameters = underparameters;
-        this.commonparameters = commonparameters;
-        this.undercommonparameters = undercommonparameters;
-        this.createdDate = createdDate;
+        this.inventoryDetailParameter = inventoryDetailParameter;
+        this.inventoryDetailCommonParameter = inventoryDetailCommonParameter;
+        this.movementHistory = movementHistory;
         this.note = note;
-        this.status = status;
     }
 
     public Long getId() {
@@ -92,44 +90,28 @@ public class Inventory {
         this.category = category;
     }
 
-    public List<Parameter> getParameters() {
-        return parameters;
+    public List<InventoryDetailParameter> getInventoryDetailParameter() {
+        return inventoryDetailParameter;
     }
 
-    public void setParameters(List<Parameter> parameters) {
-        this.parameters = parameters;
+    public void setInventoryDetailParameter(List<InventoryDetailParameter> inventoryDetailParameter) {
+        this.inventoryDetailParameter = inventoryDetailParameter;
     }
 
-    public List<Parameter> getUnderparameters() {
-        return underparameters;
+    public List<InventoryDetailCommonParameter> getInventoryDetailCommonParameter() {
+        return inventoryDetailCommonParameter;
     }
 
-    public void setUnderparameters(List<Parameter> underparameters) {
-        this.underparameters = underparameters;
+    public void setInventoryDetailCommonParameter(List<InventoryDetailCommonParameter> inventoryDetailCommonParameter) {
+        this.inventoryDetailCommonParameter = inventoryDetailCommonParameter;
     }
 
-    public List<CommonParameter> getCommonparameters() {
-        return commonparameters;
+    public List<MovementHistory> getMovementHistory() {
+        return movementHistory;
     }
 
-    public void setCommonparameters(List<CommonParameter> commonparameters) {
-        this.commonparameters = commonparameters;
-    }
-
-    public List<UnderCommonParameter> getUndercommonparameters() {
-        return undercommonparameters;
-    }
-
-    public void setUndercommonparameters(List<UnderCommonParameter> undercommonparameters) {
-        this.undercommonparameters = undercommonparameters;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setMovementHistory(List<MovementHistory> movementHistory) {
+        this.movementHistory = movementHistory;
     }
 
     public String getNote() {
@@ -140,12 +122,4 @@ public class Inventory {
         this.note = note;
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-    
 }

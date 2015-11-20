@@ -1,8 +1,7 @@
 package com.mustafaderyol.inventory.Dao;
 
-import com.mustafaderyol.inventory.Entity.Category;
-import com.mustafaderyol.inventory.Entity.Inventory;
-import com.mustafaderyol.inventory.IDao.IInventoryDao;
+import com.mustafaderyol.inventory.Entity.InventoryDetailCommonParameter;
+import com.mustafaderyol.inventory.IDao.IInventoryDetailCommonParameterDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
-public class InventoryDao implements IInventoryDao {
+public class InventoryDetailCommonParameterDao implements IInventoryDetailCommonParameterDao {
     
     @PersistenceContext
     EntityManager em;
 
     @Override
-    public Inventory saveFunc(Inventory object) {
+    public InventoryDetailCommonParameter saveFunc(InventoryDetailCommonParameter object) {
         try
         {
             em.persist(object);
@@ -37,17 +36,16 @@ public class InventoryDao implements IInventoryDao {
     }
 
     @Override
-    public List<Inventory> allFunc() {
-        Query request = em.createNamedQuery("allInventory");
+    public List<InventoryDetailCommonParameter> allFunc() {
+        Query request = em.createNamedQuery("allInventoryDetailCommonParameter");
         return request.getResultList();
-        
     }
 
     @Override
     public void deleteFunc(Long id) {
         try
         {
-            em.remove(em.find(Inventory.class,id));
+            em.remove(em.find(InventoryDetailCommonParameter.class,id));
             em.flush();
         }
         catch(Exception e)
@@ -57,30 +55,24 @@ public class InventoryDao implements IInventoryDao {
     }
 
     @Override
-    public void updateFunc(Inventory object) {
+    public void updateFunc(InventoryDetailCommonParameter object) {
         em.merge(object);
         em.flush();
     }
 
     @Override
-    public Inventory findByIdFunc(Long id) {
+    public InventoryDetailCommonParameter findByIdFunc(Long id) {
         
-        Inventory p = new Inventory();
+        InventoryDetailCommonParameter p = new InventoryDetailCommonParameter();
         try
         {
-            p =em.find(Inventory.class,id);
+            p =em.find(InventoryDetailCommonParameter.class,id);
         }
         catch(Exception e)
         {
             System.out.print(e);
         }
         return p;
-    }
-
-    @Override
-    public List<Inventory> allInventoryByCategoryId(Category category) {
-        Query request = em.createNamedQuery("allInventoryByCategoryId").setParameter("category", category);
-        return request.getResultList();
     }
     
 }

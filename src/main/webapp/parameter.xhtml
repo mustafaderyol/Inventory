@@ -71,8 +71,8 @@
               
                         </f:facet>
 
-                        <p:ajax event="rowEdit" listener="#{parameterBean.updateParameter(item)}" update=":growl1:growl" />
-                        <p:ajax event="rowEditCancel" listener="#{parameterBean.onRowCancel}" update=":growl1:growl" />
+                        <p:ajax event="rowEdit" listener="#{parameterBean.updateParameter(item)}" update=":growl1:growl,dataTable" />
+                        <p:ajax event="rowEditCancel" listener="#{parameterBean.onRowCancel}" update=":growl1:growl,dataTable" />
 
                         <p:column headerText="Parametre Adı">
                             <p:cellEditor>
@@ -85,7 +85,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.parentparameter.name}" /></f:facet>
                                 <f:facet name="input">
-                                    <h:selectOneMenu value="#{parameterBean.parameterId}" style="width:100%">
+                                    <h:selectOneMenu value="#{parameterBean.parameterId2}" style="width:100%">
                                         <f:selectItem itemLabel="Üst Parametre" itemValue="" />
                                         <f:selectItems value="#{parameterBean.parameterList}" var="man1" itemLabel="#{man1.name}" itemValue="#{man1.id}" />
                                     </h:selectOneMenu>
@@ -97,7 +97,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.category.name}" /></f:facet>
                                 <f:facet name="input">
-                                    <h:selectOneMenu value="#{parameterBean.categoryId}" style="width:100%">
+                                    <h:selectOneMenu value="#{parameterBean.categoryId2}" style="width:100%">
                                         <f:selectItems value="#{parameterBean.categoryList}" var="man2" itemLabel="#{man2.name}" itemValue="#{man2.id}" />
                                     </h:selectOneMenu>
                                 </f:facet>

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Envanter Takip Sistemi</title>      
+    </h:head>
+    <h:body>
+        <ui:decorate template="resources/template/template.xhtml">
+            <ui:define name="main">
+                <h:form>
+                    <p:breadCrumb>
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="Dashboard" url="dashboard.xhtml" />
+                        <p:menuitem value="#{inventoryCreateBean.urlParameter}" url="dashboard.xhtml"  >  
+                        </p:menuitem>
+                        <p:menuitem value="Ekle" url="dashboard.xhtml"  >  
+                        </p:menuitem>
+                    </p:breadCrumb>
+                </h:form>
+                <br/>
+                <h:form id="growl1">
+                    <p:growl id="growl" showDetail="true" sticky="false" lifetime="200" />  
+                </h:form>
+                <h:form>
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="font-weight: bold;">Personel: </p:column>
+                            <p:column>
+                                <p:selectOneMenu value="#{inventoryCreateBean.personalId}">
+                                    <f:selectItems value="#{inventoryCreateBean.personalList}" var="p" itemLabel="#{p.firstname} #{p.lastname}" itemValue="#{p.id}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            
+                            <p:column style="font-weight: bold;">Lokasyon:</p:column>
+                            <p:column>
+                                <p:selectOneMenu value="#{inventoryCreateBean.locationId}">
+                                    <f:selectItems value="#{inventoryCreateBean.locationList}" var="l" itemLabel="#{l.name}" itemValue="#{l.id}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Birim: </p:column>
+                            <p:column colspan="3">
+                                <p:selectOneMenu value="#{inventoryCreateBean.unitId}">
+                                    <f:selectItems value="#{inventoryCreateBean.unitList}" var="l" itemLabel="#{l.name}" itemValue="#{l.id}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Lokasyon Detay: </p:column>
+                            <p:column colspan="3">
+                                <p:inputTextarea style="width: 100%" value="#{inventoryCreateBean.locationDetail}" /> 
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Not: </p:column>
+                            <p:column colspan="3">
+                                <p:inputTextarea style="width: 100%"  value="#{inventoryCreateBean.note}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+                    <p:dataTable var="item1" value="#{inventoryCreateBean.commonParameterList}" style="width: 50%; float: left;">
+                        
+                        <f:facet name="header">
+                            <h:outputText value="Ortak Parametreler" />
+                        </f:facet>
+                        
+                        <p:column headerText="">
+                            <h:outputText value="#{item1.name}" />
+                        </p:column>
+
+                        <p:column headerText="">
+                            <p:selectOneMenu value="#{inventoryCreateBean.commonParameterId}" style="width:125px">
+                                <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                <f:selectItems value="#{inventoryCreateBean.commonParameterGetList(item1)}" var="theme2" itemLabel="#{theme2.name}" itemValue="#{theme2.id}"/>
+                                <p:ajax listener="#{inventoryCreateBean.commonParameterChangeSelect(item1.id)}" update=":growl1:growl" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable var="item1" value="#{inventoryCreateBean.parameterList}" style="width: 50%; float: left;">
+                        
+                        <f:facet name="header">
+                            <h:outputText value="Parametreler" />
+                        </f:facet>
+                        
+                        <p:column headerText="">
+                            <h:outputText value="#{item1.name}" />
+                        </p:column>
+
+                        <p:column headerText="">
+                            
+                            <h:panelGroup rendered="#{item1.selectortext}">
+                                <p:inputText value="#{inventoryCreateBean.temp}" >
+                                    <p:ajax event="blur" listener="#{inventoryCreateBean.onBlurMethod(item1.id)}" update=":growl1:growl"/>
+                                </p:inputText>
+                            </h:panelGroup>        
+                            <h:panelGroup rendered="#{!item1.selectortext}">
+                                <p:selectOneMenu value="#{inventoryCreateBean.parameterId}" style="width:125px">
+                                    <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                    <f:selectItems value="#{inventoryCreateBean.parameterGetList(item1)}" var="theme1" itemLabel="#{theme1.name}" itemValue="#{theme1.id}"/>
+                                    <p:ajax listener="#{inventoryCreateBean.parameterChangeSelect(item1.id)}" update=":growl1:growl" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:panelGrid style="width: 100%; text-align: center;">
+                        <p:row>
+                            <p:column>
+                                <p:commandButton value="Kaydet" actionListener="#{inventoryCreateBean.saveInventory()}" styleClass="ui-priority-primary" update=":growl1:growl" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    
+                </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

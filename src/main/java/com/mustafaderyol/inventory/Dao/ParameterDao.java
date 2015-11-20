@@ -1,5 +1,6 @@
 package com.mustafaderyol.inventory.Dao;
 
+import com.mustafaderyol.inventory.Entity.Category;
 import com.mustafaderyol.inventory.Entity.Parameter;
 import com.mustafaderyol.inventory.IDao.IParameterDao;
 import java.util.List;
@@ -73,6 +74,25 @@ public class ParameterDao implements IParameterDao {
             System.out.print(e);
         }
         return p;
+    }
+
+    @Override
+    public List<Parameter> allFuncByCategory(Category category) {
+        
+        Query request = em.createNamedQuery("allParameterByCategory").setParameter("category", category);
+        return request.getResultList();
+    }
+
+    @Override
+    public List<Parameter> allFuncByParentParameter(Parameter parameter) {
+        Query request = em.createNamedQuery("allParameterByParentParameter").setParameter("parentparameter", parameter);
+        return request.getResultList();
+    }
+
+    @Override
+    public List<Parameter> allFuncByParentParameterByCategory(Parameter parameter, Category category) {
+        Query request = em.createNamedQuery("allParameterByParentParameterByCategory").setParameter("parentparameter", parameter).setParameter("category", category);
+        return request.getResultList();
     }
     
 }

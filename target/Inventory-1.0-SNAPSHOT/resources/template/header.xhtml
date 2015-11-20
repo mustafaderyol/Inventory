@@ -3,6 +3,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"    
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
@@ -60,6 +61,21 @@
                                 </li>
                                 <li>
                                     <a href="dashboard.xhtml"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cubs"></i> Envanter<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <ui:repeat value="#{headerMenuBean.categoryList}" var="item">
+                                            <li>
+                                                <h:outputLink value="inventorypage.xhtml">
+                                                    <h:outputText value="#{item.name}" />
+                                                    <f:param name="category" value="#{item.id}" />
+                                                </h:outputLink>
+                                            </li>
+                                            
+                                        </ui:repeat>
+                                    </ul>
+                                    <!-- /.nav-second-level -->
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-list"></i> Tanımlar<span class="fa arrow"></span></a>
