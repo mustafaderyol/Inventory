@@ -57,9 +57,10 @@ public class InventoryDao implements IInventoryDao {
     }
 
     @Override
-    public void updateFunc(Inventory object) {
+    public Inventory updateFunc(Inventory object) {
         em.merge(object);
         em.flush();
+        return object;
     }
 
     @Override

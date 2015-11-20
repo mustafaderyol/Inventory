@@ -13,7 +13,7 @@ public interface IInventoryDao {
     public List<Inventory> allFunc();
     public List<Inventory> allInventoryByCategoryId(Category category);
     public void deleteFunc(Long id);
-    public void updateFunc(Inventory object);
+    public Inventory updateFunc(Inventory object);
     public Inventory findByIdFunc(Long id);
     
 }

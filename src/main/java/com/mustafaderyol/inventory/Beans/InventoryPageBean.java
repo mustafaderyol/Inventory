@@ -2,10 +2,18 @@ package com.mustafaderyol.inventory.Beans;
 
 import com.mustafaderyol.inventory.Entity.Category;
 import com.mustafaderyol.inventory.Entity.Inventory;
+import com.mustafaderyol.inventory.Entity.Location;
+import com.mustafaderyol.inventory.Entity.MovementHistory;
+import com.mustafaderyol.inventory.Entity.Personal;
 import com.mustafaderyol.inventory.Entity.Services;
+import com.mustafaderyol.inventory.Entity.Unit;
 import com.mustafaderyol.inventory.IDao.ICategoryDao;
 import com.mustafaderyol.inventory.IDao.IInventoryDao;
+import com.mustafaderyol.inventory.IDao.ILocationDao;
+import com.mustafaderyol.inventory.IDao.IMovementHistoryDao;
+import com.mustafaderyol.inventory.IDao.IPersonalDao;
 import com.mustafaderyol.inventory.IDao.IServicesDao;
+import com.mustafaderyol.inventory.IDao.IUnitDao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,10 +39,26 @@ public class InventoryPageBean {
     ICategoryDao iCategoryDao;
     
     @Autowired
+    ILocationDao iLocationDao;
+    
+    @Autowired
+    IPersonalDao iPersonalDao;
+    
+    @Autowired
+    IUnitDao iUnitDao;
+    
+    @Autowired
+    IMovementHistoryDao iMovementHistoryDao;
+    
+    @Autowired
     IInventoryDao iInventoryDao;
     
     @Autowired
     IServicesDao iServicesDao;
+    
+    List<Personal> personalList = new ArrayList<Personal>();
+    List<Unit> unitList = new ArrayList<Unit>();
+    List<Location> locationList = new ArrayList<Location>();
     
     Services services,services2;
     List<Services> servicesList = new ArrayList<Services>();
@@ -43,12 +67,16 @@ public class InventoryPageBean {
     Inventory inventory;
     List<Inventory> inventoryList = new ArrayList<Inventory>();
     
+    Long personalId,locationId,unitId;
+    MovementHistory movementHistory;
+    
     @PostConstruct
     private void postConstruct() {
         category = new Category();
         inventory = new Inventory();
         services = new Services();
         services2 = new Services();
+        movementHistory = new MovementHistory();
     }
     
     public String getUrlParameter()
@@ -72,7 +100,9 @@ public class InventoryPageBean {
     public void inventoryDetail(Inventory inventory)
     {
          this.inventory = inventory;
-         
+        personalList = iPersonalDao.allFunc();
+        unitList = iUnitDao.allFunc();
+        locationList = iLocationDao.allFunc();
         servicesList = iServicesDao.allServicesByInventory(this.inventory);
     }
     
@@ -119,7 +149,23 @@ public class InventoryPageBean {
         this.services2 = new Services();
     }
     
-    
+    public void saveMovementHistory()
+    {
+        Date date = new Date();
+        this.movementHistory.setLocation(iLocationDao.findByIdFunc(this.locationId));
+        this.movementHistory.setPersonal(iPersonalDao.findByIdFunc(this.personalId));
+        this.movementHistory.setUnit(iUnitDao.findByIdFunc(this.unitId));
+        this.movementHistory.setStatus(Boolean.TRUE);
+        this.movementHistory.setCreatedDate(date);
+        this.movementHistory = iMovementHistoryDao.saveFunc(this.movementHistory);
+        List<MovementHistory> listTemp = this.inventory.getMovementHistory();
+        listTemp.add(this.movementHistory);
+        this.inventory.setMovementHistory(listTemp);
+        this.inventory = iInventoryDao.updateFunc(this.inventory);
+        this.inventoryList = iInventoryDao.allInventoryByCategoryId(this.category);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
+        this.movementHistory = new MovementHistory();
+    }
     
     
     
@@ -169,5 +215,61 @@ public class InventoryPageBean {
 
     public void setServices2(Services services2) {
         this.services2 = services2;
+    }
+
+    public Long getPersonalId() {
+        return personalId;
+    }
+
+    public void setPersonalId(Long personalId) {
+        this.personalId = personalId;
+    }
+
+    public Long getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
+    }
+
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public MovementHistory getMovementHistory() {
+        return movementHistory;
+    }
+
+    public void setMovementHistory(MovementHistory movementHistory) {
+        this.movementHistory = movementHistory;
+    }
+
+    public List<Personal> getPersonalList() {
+        return personalList;
+    }
+
+    public void setPersonalList(List<Personal> personalList) {
+        this.personalList = personalList;
+    }
+
+    public List<Unit> getUnitList() {
+        return unitList;
+    }
+
+    public void setUnitList(List<Unit> unitList) {
+        this.unitList = unitList;
+    }
+
+    public List<Location> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(List<Location> locationList) {
+        this.locationList = locationList;
     }
 }

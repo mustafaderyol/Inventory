@@ -136,76 +136,56 @@
                                 
                             </p:tab>
                             <p:tab title="Hareket Geçmişi">
-                                <p:panelGrid>
-                                    <ui:repeat value="#{inventoryPageBean.inventory.movementHistory}" var="mh">
-                                        <p:row>
-                                            <p:column style="font-weight: bold;">Personel :</p:column>
-                                            <p:column>
-                                                <h:outputText value="#{mh.personal.firstname} #{mh.personal.lastname}"/>
-                                            </p:column>
-                                            <p:column style="font-weight: bold;">Lokasyon :</p:column>
-                                            <p:column>
-                                                <h:outputText value="#{mh.location.name}"/>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column style="font-weight: bold;">Birim :</p:column>
-                                            <p:column>
-                                                <h:outputText value="#{mh.unit.name}"/>
-                                            </p:column>
-                                            <p:column style="font-weight: bold;">Tarih :</p:column>
-                                            <p:column>
-                                                <h:outputText value="#{mh.createdDate}"/>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
-                                            <p:column colspan="3">
-                                                <h:outputText value="#{mh.locationdetail}"/>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column colspan="4" styleClass="ui-widget-header">
-                                                <p:spacer height="0"/>
-                                            </p:column>
-                                        </p:row>
-                                    </ui:repeat>
-                                </p:panelGrid>
-                                <p:dataList  value="#{inventoryPageBean.inventory.movementHistory}" var="mh" type="definition">
-                                    <p:panelGrid style="width: 100%;">
-                                            <p:row>
-                                                <p:column style="font-weight: bold;">Personel :</p:column>
-                                                <p:column>
-                                                    <h:outputText value="#{mh.personal.firstname} #{mh.personal.lastname}"/>
-                                                </p:column>
-                                                <p:column style="font-weight: bold;">Lokasyon :</p:column>
-                                                <p:column>
-                                                    <h:outputText value="#{mh.location.name}"/>
-                                                </p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column style="font-weight: bold;">Birim :</p:column>
-                                                <p:column>
-                                                    <h:outputText value="#{mh.unit.name}"/>
-                                                </p:column>
-                                                <p:column style="font-weight: bold;">Tarih :</p:column>
-                                                <p:column>
-                                                    <h:outputText value="#{mh.createdDate}"/>
-                                                </p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
-                                                <p:column colspan="3">
-                                                    <h:outputText value="#{mh.locationdetail}"/>
-                                                </p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column colspan="4" styleClass="ui-widget-header">
-                                                    <p:spacer height="0"/>
-                                                </p:column>
-                                            </p:row>
-                                    </p:panelGrid>
-                                </p:dataList>
+                                    <p:selectOneMenu value="#{inventoryPageBean.personalId}">
+                                        <f:selectItems value="#{inventoryPageBean.personalList}" var="theme1" itemLabel="#{theme1.firstname} #{theme1.lastname}" itemValue="#{theme1.id}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <p:selectOneMenu value="#{inventoryPageBean.locationId}">
+                                        <f:selectItems value="#{inventoryPageBean.locationList}" var="theme2" itemLabel="#{theme2.name}" itemValue="#{theme2.id}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <p:selectOneMenu value="#{inventoryPageBean.unitId}">
+                                        <f:selectItems value="#{inventoryPageBean.unitList}" var="theme3" itemLabel="#{theme3.name}" itemValue="#{theme3.id}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <p:inputTextarea style="width: 100%" value="#{inventoryPageBean.movementHistory.locationdetail}" required="required" /> 
+                                    <p:commandButton value="Hareket Ettir"  actionListener="#{inventoryPageBean.saveMovementHistory()}" update=":growl1:growl,:dialogInventoryForm,:dataFormInventory" />
+                                    <br/>
+                                    <p:dataList  value="#{inventoryPageBean.inventory.movementHistory}" var="mh" type="definition">
+                                        <p:panelGrid style="width: 100%;">
+                                                <p:row>
+                                                    <p:column style="font-weight: bold;">Personel :</p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{mh.personal.firstname} #{mh.personal.lastname}"/>
+                                                    </p:column>
+                                                    <p:column style="font-weight: bold;">Lokasyon :</p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{mh.location.name}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column style="font-weight: bold;">Birim :</p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{mh.unit.name}"/>
+                                                    </p:column>
+                                                    <p:column style="font-weight: bold;">Tarih :</p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{mh.createdDate}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column style="font-weight: bold;">Lokasyon Detay :</p:column>
+                                                    <p:column colspan="3">
+                                                        <h:outputText value="#{mh.locationdetail}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column colspan="4" styleClass="ui-widget-header">
+                                                        <p:spacer height="0"/>
+                                                    </p:column>
+                                                </p:row>
+                                        </p:panelGrid>
+                                    </p:dataList>
                             </p:tab>
                             <p:tab title="Emanet Geçmişi">
                                 <h:panelGrid columns="2" cellpadding="10">
