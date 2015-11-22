@@ -1,14 +1,13 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.GroupEntity;
-import com.mustafaderyol.inventory.Entity.Personal;
-import com.mustafaderyol.inventory.IDao.IGroupDao;
-import com.mustafaderyol.inventory.IDao.IPersonalDao;
+import com.mustafaderyol.inventory.entity.GroupEntity;
+import com.mustafaderyol.inventory.entity.Personal;
+import com.mustafaderyol.inventory.idao.IGroupDao;
+import com.mustafaderyol.inventory.idao.IPersonalDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

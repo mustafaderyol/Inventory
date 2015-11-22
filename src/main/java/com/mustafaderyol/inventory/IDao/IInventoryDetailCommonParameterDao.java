@@ -1,6 +1,6 @@
-package com.mustafaderyol.inventory.IDao;
+package com.mustafaderyol.inventory.idao;
 
-import com.mustafaderyol.inventory.Entity.InventoryDetailCommonParameter;
+import com.mustafaderyol.inventory.entity.InventoryDetailCommonParameter;
 import java.util.List;
 
 /**

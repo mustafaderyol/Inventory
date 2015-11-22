@@ -1,11 +1,11 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Category;
-import com.mustafaderyol.inventory.Entity.CommonParameter;
-import com.mustafaderyol.inventory.Entity.UnderCommonParameter;
-import com.mustafaderyol.inventory.IDao.ICategoryDao;
-import com.mustafaderyol.inventory.IDao.ICommonParameterDao;
-import com.mustafaderyol.inventory.IDao.IUnderCommonParameterDao;
+import com.mustafaderyol.inventory.entity.Category;
+import com.mustafaderyol.inventory.entity.CommonParameter;
+import com.mustafaderyol.inventory.entity.UnderCommonParameter;
+import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.idao.ICommonParameterDao;
+import com.mustafaderyol.inventory.idao.IUnderCommonParameterDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

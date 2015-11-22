@@ -1,5 +1,5 @@
 
-package com.mustafaderyol.inventory.Entity;
+package com.mustafaderyol.inventory.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;

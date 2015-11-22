@@ -1,6 +1,6 @@
-package com.mustafaderyol.inventory.IDao;
+package com.mustafaderyol.inventory.idao;
 
-import com.mustafaderyol.inventory.Entity.Location;
+import com.mustafaderyol.inventory.entity.Location;
 import java.util.List;
 
 /**

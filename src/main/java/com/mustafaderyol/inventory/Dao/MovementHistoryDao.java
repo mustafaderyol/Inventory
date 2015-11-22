@@ -1,7 +1,7 @@
-package com.mustafaderyol.inventory.Dao;
+package com.mustafaderyol.inventory.dao;
 
-import com.mustafaderyol.inventory.Entity.MovementHistory;
-import com.mustafaderyol.inventory.IDao.IMovementHistoryDao;
+import com.mustafaderyol.inventory.entity.MovementHistory;
+import com.mustafaderyol.inventory.idao.IMovementHistoryDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

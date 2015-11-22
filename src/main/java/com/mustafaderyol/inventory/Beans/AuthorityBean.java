@@ -1,7 +1,7 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Authority;
-import com.mustafaderyol.inventory.IDao.IAuthorityDao;
+import com.mustafaderyol.inventory.entity.Authority;
+import com.mustafaderyol.inventory.idao.IAuthorityDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

@@ -1,5 +1,5 @@
 
-package com.mustafaderyol.inventory.Entity;
+package com.mustafaderyol.inventory.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name="allCategory",query="SELECT c FROM CATEGORY c")
 })
+@XmlRootElement
 public class Category {
     private static final long serialVersionUID = 1L;
     

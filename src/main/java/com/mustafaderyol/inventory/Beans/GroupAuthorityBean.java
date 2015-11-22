@@ -1,11 +1,11 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Authority;
-import com.mustafaderyol.inventory.Entity.GroupAuthority;
-import com.mustafaderyol.inventory.Entity.GroupEntity;
-import com.mustafaderyol.inventory.IDao.IAuthorityDao;
-import com.mustafaderyol.inventory.IDao.IGroupAuthorityDao;
-import com.mustafaderyol.inventory.IDao.IGroupDao;
+import com.mustafaderyol.inventory.entity.Authority;
+import com.mustafaderyol.inventory.entity.GroupAuthority;
+import com.mustafaderyol.inventory.entity.GroupEntity;
+import com.mustafaderyol.inventory.idao.IAuthorityDao;
+import com.mustafaderyol.inventory.idao.IGroupAuthorityDao;
+import com.mustafaderyol.inventory.idao.IGroupDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

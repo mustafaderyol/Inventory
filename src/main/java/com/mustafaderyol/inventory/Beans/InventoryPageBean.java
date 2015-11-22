@@ -1,21 +1,21 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Category;
-import com.mustafaderyol.inventory.Entity.Inventory;
-import com.mustafaderyol.inventory.Entity.InventoryRelationship;
-import com.mustafaderyol.inventory.Entity.Location;
-import com.mustafaderyol.inventory.Entity.MovementHistory;
-import com.mustafaderyol.inventory.Entity.Personal;
-import com.mustafaderyol.inventory.Entity.Services;
-import com.mustafaderyol.inventory.Entity.Unit;
-import com.mustafaderyol.inventory.IDao.ICategoryDao;
-import com.mustafaderyol.inventory.IDao.IInventoryDao;
-import com.mustafaderyol.inventory.IDao.IInventoryRelationshipDao;
-import com.mustafaderyol.inventory.IDao.ILocationDao;
-import com.mustafaderyol.inventory.IDao.IMovementHistoryDao;
-import com.mustafaderyol.inventory.IDao.IPersonalDao;
-import com.mustafaderyol.inventory.IDao.IServicesDao;
-import com.mustafaderyol.inventory.IDao.IUnitDao;
+import com.mustafaderyol.inventory.entity.Category;
+import com.mustafaderyol.inventory.entity.Inventory;
+import com.mustafaderyol.inventory.entity.InventoryRelationship;
+import com.mustafaderyol.inventory.entity.Location;
+import com.mustafaderyol.inventory.entity.MovementHistory;
+import com.mustafaderyol.inventory.entity.Personal;
+import com.mustafaderyol.inventory.entity.Services;
+import com.mustafaderyol.inventory.entity.Unit;
+import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.idao.IInventoryDao;
+import com.mustafaderyol.inventory.idao.IInventoryRelationshipDao;
+import com.mustafaderyol.inventory.idao.ILocationDao;
+import com.mustafaderyol.inventory.idao.IMovementHistoryDao;
+import com.mustafaderyol.inventory.idao.IPersonalDao;
+import com.mustafaderyol.inventory.idao.IServicesDao;
+import com.mustafaderyol.inventory.idao.IUnitDao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**

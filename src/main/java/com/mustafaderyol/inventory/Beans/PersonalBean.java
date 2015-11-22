@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Personal;
-import com.mustafaderyol.inventory.IDao.IPersonalDao;
+import com.mustafaderyol.inventory.entity.Personal;
+import com.mustafaderyol.inventory.idao.IPersonalDao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

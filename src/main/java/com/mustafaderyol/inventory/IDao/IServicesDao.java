@@ -1,7 +1,7 @@
-package com.mustafaderyol.inventory.IDao;
+package com.mustafaderyol.inventory.idao;
 
-import com.mustafaderyol.inventory.Entity.Inventory;
-import com.mustafaderyol.inventory.Entity.Services;
+import com.mustafaderyol.inventory.entity.Inventory;
+import com.mustafaderyol.inventory.entity.Services;
 import java.util.List;
 
 /**

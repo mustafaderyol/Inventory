@@ -1,4 +1,4 @@
-package com.mustafaderyol.inventory.Entity;
+package com.mustafaderyol.inventory.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

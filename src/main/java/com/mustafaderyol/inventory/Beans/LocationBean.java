@@ -1,7 +1,7 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Location;
-import com.mustafaderyol.inventory.IDao.ILocationDao;
+import com.mustafaderyol.inventory.entity.Location;
+import com.mustafaderyol.inventory.idao.ILocationDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

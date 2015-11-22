@@ -1,8 +1,8 @@
-package com.mustafaderyol.inventory.Dao;
+package com.mustafaderyol.inventory.dao;
 
-import com.mustafaderyol.inventory.Entity.Category;
-import com.mustafaderyol.inventory.Entity.Parameter;
-import com.mustafaderyol.inventory.IDao.IParameterDao;
+import com.mustafaderyol.inventory.entity.Category;
+import com.mustafaderyol.inventory.entity.Parameter;
+import com.mustafaderyol.inventory.idao.IParameterDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

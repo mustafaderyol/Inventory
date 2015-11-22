@@ -1,8 +1,7 @@
-package com.mustafaderyol.inventory.IDao;
+package com.mustafaderyol.inventory.idao;
 
-import com.mustafaderyol.inventory.Entity.Authority;
-import com.mustafaderyol.inventory.Entity.GroupAuthority;
-import com.mustafaderyol.inventory.Entity.GroupEntity;
+import com.mustafaderyol.inventory.entity.GroupAuthority;
+import com.mustafaderyol.inventory.entity.GroupEntity;
 import java.util.List;
 
 /**

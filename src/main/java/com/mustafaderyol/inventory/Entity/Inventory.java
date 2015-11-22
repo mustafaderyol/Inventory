@@ -1,6 +1,5 @@
-package com.mustafaderyol.inventory.Entity;
+package com.mustafaderyol.inventory.entity;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

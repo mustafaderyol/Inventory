@@ -1,7 +1,7 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.GroupEntity;
-import com.mustafaderyol.inventory.IDao.IGroupDao;
+import com.mustafaderyol.inventory.entity.GroupEntity;
+import com.mustafaderyol.inventory.idao.IGroupDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

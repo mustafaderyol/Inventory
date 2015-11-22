@@ -1,5 +1,5 @@
-package com.mustafaderyol.inventory.IDao;
-import com.mustafaderyol.inventory.Entity.Authority;
+package com.mustafaderyol.inventory.idao;
+import com.mustafaderyol.inventory.entity.Authority;
 import java.util.List;
 
 /**

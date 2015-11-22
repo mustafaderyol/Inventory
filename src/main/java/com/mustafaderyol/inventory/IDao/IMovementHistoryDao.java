@@ -1,6 +1,6 @@
-package com.mustafaderyol.inventory.IDao;
+package com.mustafaderyol.inventory.idao;
 
-import com.mustafaderyol.inventory.Entity.MovementHistory;
+import com.mustafaderyol.inventory.entity.MovementHistory;
 import java.util.List;
 
 /**

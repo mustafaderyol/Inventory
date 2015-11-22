@@ -1,9 +1,9 @@
-package com.mustafaderyol.inventory.Beans;
+package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.Entity.Category;
-import com.mustafaderyol.inventory.Entity.Parameter;
-import com.mustafaderyol.inventory.IDao.ICategoryDao;
-import com.mustafaderyol.inventory.IDao.IParameterDao;
+import com.mustafaderyol.inventory.entity.Category;
+import com.mustafaderyol.inventory.entity.Parameter;
+import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.idao.IParameterDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -11,7 +11,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
