@@ -22,7 +22,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost/inventory"/>
         <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="password" value="101101"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
