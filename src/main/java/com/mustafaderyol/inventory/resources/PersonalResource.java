@@ -1,65 +1,68 @@
 package com.mustafaderyol.inventory.resources;
 
-import com.mustafaderyol.inventory.entity.Category;
-import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.entity.Personal;
+import com.mustafaderyol.inventory.idao.IPersonalDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+/**
+ *
+ * @author MstfDryl
+ */
 @Controller
-@RequestMapping("/category")
-public class CategoryResource {
-
+@RequestMapping("/personal")
+public class PersonalResource {
+    
     @Autowired
-    private ICategoryDao iCategoryDao;
-
+    IPersonalDao iPersonalDao;
+    
     @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Category> getCategory() {
-        final List<Category> categories = iCategoryDao.allFunc();
-        return categories;
+    public List<Personal> getPersonal() {
+        final List<Personal> personals = iPersonalDao.allFunc();
+        return personals;
     }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category getFindById(@PathVariable Long id)
+    public Personal getFindById(@PathVariable Long id)
     {
-        Category category = iCategoryDao.findByIdFunc(id);
-        return category;
+        Personal personal = iPersonalDao.findByIdFunc(id);
+        return personal;
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Boolean deleteCategory(@PathVariable Long id)
+    public Boolean deletePersonal(@PathVariable Long id)
     {
-        iCategoryDao.deleteFunc(id);
+        iPersonalDao.deleteFunc(id);
         return true;
     }
 
     
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category createCategory(@RequestBody Category category)
+    public Personal createPersonal(@RequestBody Personal personal)
     {
-        iCategoryDao.saveFunc(category);
-        return category;
+        iPersonalDao.saveFunc(personal);
+        return personal;
     }
 
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category updateCategory(@RequestBody Category category)
+    public Personal updatePersonal(@RequestBody Personal personal)
     {
-        iCategoryDao.updateFunc(category);
-        return category;
+        iPersonalDao.updateFunc(personal);
+        return personal;
     }
-
+    
 }

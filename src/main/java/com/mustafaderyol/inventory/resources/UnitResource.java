@@ -1,65 +1,68 @@
 package com.mustafaderyol.inventory.resources;
 
-import com.mustafaderyol.inventory.entity.Category;
-import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.entity.Unit;
+import com.mustafaderyol.inventory.idao.IUnitDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+/**
+ *
+ * @author MstfDryl
+ */
 @Controller
-@RequestMapping("/category")
-public class CategoryResource {
-
+@RequestMapping("/unit")
+public class UnitResource {
+    
     @Autowired
-    private ICategoryDao iCategoryDao;
-
+    IUnitDao iUnitDao;
+    
     @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Category> getCategory() {
-        final List<Category> categories = iCategoryDao.allFunc();
-        return categories;
+    public List<Unit> getUnit() {
+        final List<Unit> units = iUnitDao.allFunc();
+        return units;
     }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category getFindById(@PathVariable Long id)
+    public Unit getFindById(@PathVariable Long id)
     {
-        Category category = iCategoryDao.findByIdFunc(id);
-        return category;
+        Unit unit = iUnitDao.findByIdFunc(id);
+        return unit;
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Boolean deleteCategory(@PathVariable Long id)
+    public Boolean deleteUnit(@PathVariable Long id)
     {
-        iCategoryDao.deleteFunc(id);
+        iUnitDao.deleteFunc(id);
         return true;
     }
 
     
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category createCategory(@RequestBody Category category)
+    public Unit createUnit(@RequestBody Unit unit)
     {
-        iCategoryDao.saveFunc(category);
-        return category;
+        iUnitDao.saveFunc(unit);
+        return unit;
     }
 
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category updateCategory(@RequestBody Category category)
+    public Unit updateUnit(@RequestBody Unit unit)
     {
-        iCategoryDao.updateFunc(category);
-        return category;
+        iUnitDao.updateFunc(unit);
+        return unit;
     }
-
+    
 }

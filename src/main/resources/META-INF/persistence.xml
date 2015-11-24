@@ -3,6 +3,8 @@
   <persistence-unit name="Inventory_PU" transaction-type="RESOURCE_LOCAL">
     <non-jta-data-source>Inventory</non-jta-data-source>
     <class>com.mustafaderyol.inventory.entity.Personal</class>
+    <class>com.mustafaderyol.inventory.resources.MovementHistoryResource</class>
+    <class>com.mustafaderyol.inventory.resources.LocationResource</class>
     <properties>
       <property name="eclipselink.weaving" value="false"/>
     </properties>

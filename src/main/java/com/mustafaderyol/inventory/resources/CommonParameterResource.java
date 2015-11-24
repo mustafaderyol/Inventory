@@ -1,65 +1,68 @@
 package com.mustafaderyol.inventory.resources;
 
-import com.mustafaderyol.inventory.entity.Category;
-import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.entity.CommonParameter;
+import com.mustafaderyol.inventory.idao.ICommonParameterDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+/**
+ *
+ * @author MstfDryl
+ */
 @Controller
-@RequestMapping("/category")
-public class CategoryResource {
+@RequestMapping("/commonparameter")
+public class CommonParameterResource {
+    
 
     @Autowired
-    private ICategoryDao iCategoryDao;
+    private ICommonParameterDao iCommonParameterDao;
 
     @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Category> getCategory() {
-        final List<Category> categories = iCategoryDao.allFunc();
-        return categories;
+    public List<CommonParameter> getCommonParameter() {
+        final List<CommonParameter> commonParameters = iCommonParameterDao.allFunc();
+        return commonParameters;
     }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category getFindById(@PathVariable Long id)
+    public CommonParameter getFindById(@PathVariable Long id)
     {
-        Category category = iCategoryDao.findByIdFunc(id);
-        return category;
+        CommonParameter commonParameter = iCommonParameterDao.findByIdFunc(id);
+        return commonParameter;
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Boolean deleteCategory(@PathVariable Long id)
+    public Boolean deleteCommonParameter(@PathVariable Long id)
     {
-        iCategoryDao.deleteFunc(id);
+        iCommonParameterDao.deleteFunc(id);
         return true;
     }
 
     
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category createCategory(@RequestBody Category category)
+    public CommonParameter createCommonParameter(@RequestBody CommonParameter commonParameter)
     {
-        iCategoryDao.saveFunc(category);
-        return category;
+        iCommonParameterDao.saveFunc(commonParameter);
+        return commonParameter;
     }
 
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category updateCategory(@RequestBody Category category)
+    public CommonParameter updateCommonParameter(@RequestBody CommonParameter commonParameter)
     {
-        iCategoryDao.updateFunc(category);
-        return category;
+        iCommonParameterDao.updateFunc(commonParameter);
+        return commonParameter;
     }
-
 }

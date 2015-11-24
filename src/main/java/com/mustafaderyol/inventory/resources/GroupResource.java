@@ -1,65 +1,67 @@
 package com.mustafaderyol.inventory.resources;
 
-import com.mustafaderyol.inventory.entity.Category;
-import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.entity.GroupEntity;
+import com.mustafaderyol.inventory.idao.IGroupDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+/**
+ *
+ * @author MstfDryl
+ */
 @Controller
-@RequestMapping("/category")
-public class CategoryResource {
-
+@RequestMapping("/group")
+public class GroupResource {
+    
     @Autowired
-    private ICategoryDao iCategoryDao;
+    private IGroupDao iGroupDao;
 
     @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Category> getCategory() {
-        final List<Category> categories = iCategoryDao.allFunc();
-        return categories;
+    public List<GroupEntity> getGroupEntity() {
+        final List<GroupEntity> groups = iGroupDao.allFunc();
+        return groups;
     }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category getFindById(@PathVariable Long id)
+    public GroupEntity getFindById(@PathVariable Long id)
     {
-        Category category = iCategoryDao.findByIdFunc(id);
-        return category;
+        GroupEntity group = iGroupDao.findByIdFunc(id);
+        return group;
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Boolean deleteCategory(@PathVariable Long id)
+    public Boolean deleteGroupEntity(@PathVariable Long id)
     {
-        iCategoryDao.deleteFunc(id);
+        iGroupDao.deleteFunc(id);
         return true;
     }
 
     
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category createCategory(@RequestBody Category category)
+    public GroupEntity createGroupEntity(@RequestBody GroupEntity group)
     {
-        iCategoryDao.saveFunc(category);
-        return category;
+        iGroupDao.saveFunc(group);
+        return group;
     }
 
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category updateCategory(@RequestBody Category category)
+    public GroupEntity updateGroupEntity(@RequestBody GroupEntity group)
     {
-        iCategoryDao.updateFunc(category);
-        return category;
+        iGroupDao.updateFunc(group);
+        return group;
     }
-
 }

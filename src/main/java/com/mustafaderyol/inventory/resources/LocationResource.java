@@ -1,65 +1,70 @@
 package com.mustafaderyol.inventory.resources;
 
-import com.mustafaderyol.inventory.entity.Category;
-import com.mustafaderyol.inventory.idao.ICategoryDao;
+import com.mustafaderyol.inventory.entity.Location;
+import com.mustafaderyol.inventory.idao.ILocationDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+/**
+ *
+ * @author MstfDryl
+ */
 @Controller
-@RequestMapping("/category")
-public class CategoryResource {
-
+@RequestMapping("/location")
+public class LocationResource {
+    
     @Autowired
-    private ICategoryDao iCategoryDao;
+    private ILocationDao iLocationDao;
 
     @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Category> getCategory() {
-        final List<Category> categories = iCategoryDao.allFunc();
-        return categories;
+    public List<Location> getLocation() {
+        final List<Location> locations = iLocationDao.allFunc();
+
+        return locations;
+
     }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category getFindById(@PathVariable Long id)
+    public Location getFindById(@PathVariable Long id)
     {
-        Category category = iCategoryDao.findByIdFunc(id);
-        return category;
+        Location location = iLocationDao.findByIdFunc(id);
+        return location;
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Boolean deleteCategory(@PathVariable Long id)
+    public Boolean deleteLocation(@PathVariable Long id)
     {
-        iCategoryDao.deleteFunc(id);
+        iLocationDao.deleteFunc(id);
         return true;
     }
 
     
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category createCategory(@RequestBody Category category)
+    public Location createLocation(@RequestBody Location location)
     {
-        iCategoryDao.saveFunc(category);
-        return category;
+        iLocationDao.saveFunc(location);
+        return location;
     }
 
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Category updateCategory(@RequestBody Category category)
+    public Location updateCategory(@RequestBody Location location)
     {
-        iCategoryDao.updateFunc(category);
-        return category;
+        iLocationDao.updateFunc(location);
+        return location;
     }
 
 }
