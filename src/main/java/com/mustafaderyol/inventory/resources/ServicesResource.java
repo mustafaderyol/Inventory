@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author MstfDryl
  */
 @Controller
-@RequestMapping("/service")
-public class ServiceResource {
+@RequestMapping("/services")
+public class ServicesResource {
     
     @Autowired
     IServicesDao iServicesDao;
@@ -28,7 +28,7 @@ public class ServiceResource {
     @Autowired
     IInventoryDao iInventoryDao;
     
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/all/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public List<Services> getService(@PathVariable Long id) {
         Inventory i = iInventoryDao.findByIdFunc(id);
