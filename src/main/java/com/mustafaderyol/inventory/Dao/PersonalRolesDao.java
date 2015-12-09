@@ -1,7 +1,7 @@
 package com.mustafaderyol.inventory.dao;
 
-import com.mustafaderyol.inventory.entity.Authority;
-import com.mustafaderyol.inventory.idao.IAuthorityDao;
+import com.mustafaderyol.inventory.entity.PersonalRoles;
+import com.mustafaderyol.inventory.idao.IPersonalRolesDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,18 +11,17 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author MstfDryl
  */
 @Repository
 @Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
-public class AuthorityDao implements IAuthorityDao {
+public class PersonalRolesDao implements IPersonalRolesDao {
     
     @PersistenceContext
     EntityManager em;
 
     @Override
-    public void saveFunc(Authority object) {
+    public void saveFunc(PersonalRoles object) {
         try
         {
             em.persist(object);
@@ -35,8 +34,8 @@ public class AuthorityDao implements IAuthorityDao {
     }
 
     @Override
-    public List<Authority> allFunc() {
-        Query request = em.createNamedQuery("allAuthority");
+    public List<PersonalRoles> allFunc() {
+        Query request = em.createNamedQuery("allPersonalRoles");
         return request.getResultList();
         
     }
@@ -45,7 +44,7 @@ public class AuthorityDao implements IAuthorityDao {
     public void deleteFunc(Long id) {
         try
         {
-            em.remove(em.find(Authority.class,id));
+            em.remove(em.find(PersonalRoles.class,id));
             em.flush();
         }
         catch(Exception e)
@@ -55,24 +54,30 @@ public class AuthorityDao implements IAuthorityDao {
     }
 
     @Override
-    public void updateFunc(Authority object) {
+    public void updateFunc(PersonalRoles object) {
         em.merge(object);
         em.flush();
     }
 
     @Override
-    public Authority findByIdFunc(Long id) {
+    public PersonalRoles findByIdFunc(Long id) {
         
-        Authority p = new Authority();
+        PersonalRoles p = new PersonalRoles();
         try
         {
-            p =em.find(Authority.class,id);
+            p =em.find(PersonalRoles.class,id);
         }
         catch(Exception e)
         {
             System.out.print(e);
         }
         return p;
+    }
+
+    @Override
+    public List<PersonalRoles> findByPersonalIdFunc(Long id) {
+        Query request = em.createNamedQuery("allPersonalRolesByPersonalId").setParameter("id", id);
+        return request.getResultList();
     }
     
 }

@@ -3,17 +3,12 @@ package com.mustafaderyol.inventory.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -56,13 +51,6 @@ public class Personal implements Serializable {
     @JoinColumn(name="PERSONALUNITFK",nullable=true)
     private Unit unit;
     
-    
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "PERSONALGROUP", joinColumns = { 
-                    @JoinColumn(name = "PERSONALFK", nullable = false, updatable = false) }, 
-                    inverseJoinColumns = { @JoinColumn(name = "GROUPFK", 
-                                    nullable = false, updatable = false) })
-    private List<GroupEntity> groups;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="CREATEDDATE",nullable=false)
@@ -71,14 +59,13 @@ public class Personal implements Serializable {
     public Personal() {
     }
 
-    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Unit unit, List<GroupEntity> groups, Date createdDate) {
+    public Personal(String firstname, String lastname, String email, String password, Boolean sex, Unit unit,  Date createdDate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.sex = sex;
         this.unit = unit;
-        this.groups = groups;
         this.createdDate = createdDate;
     }
 
@@ -136,14 +123,6 @@ public class Personal implements Serializable {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
-    }
-
-    public List<GroupEntity> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<GroupEntity> groups) {
-        this.groups = groups;
     }
 
     public Date getCreatedDate() {

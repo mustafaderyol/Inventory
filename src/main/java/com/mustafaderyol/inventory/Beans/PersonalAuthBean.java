@@ -1,9 +1,9 @@
 package com.mustafaderyol.inventory.beans;
 
-import com.mustafaderyol.inventory.entity.GroupEntity;
 import com.mustafaderyol.inventory.entity.Personal;
-import com.mustafaderyol.inventory.idao.IGroupDao;
+import com.mustafaderyol.inventory.entity.PersonalRoles;
 import com.mustafaderyol.inventory.idao.IPersonalDao;
+import com.mustafaderyol.inventory.idao.IPersonalRolesDao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,33 +27,34 @@ public class PersonalAuthBean{
     IPersonalDao iPersonalDao;
     
     @Autowired
-    IGroupDao iGroupDao;
+    IPersonalRolesDao iPersonalRolesDao;
     
-    Long groupId,personalId;
     Personal personal;
     List<Personal> personalList = new ArrayList<Personal>();
     
-    List<GroupEntity> groupList = new ArrayList<GroupEntity>();
-    
+    PersonalRoles personalRoles;
+    List<PersonalRoles> personalRolesList = new ArrayList<PersonalRoles>();
     
     @PostConstruct
     private void postConstruct() {
         personal = new Personal();
+        personalRoles = new PersonalRoles();
         personalList = iPersonalDao.allFunc();
-        groupList = iGroupDao.allFunc();
     }
     
     public void popupRefresh(){
         this.personal = new Personal();
-        groupList = iGroupDao.allFunc();
     }
     
-    public void updatePersonal(){
+    public List<PersonalRoles> getRoles(Long id)
+    {
+        return iPersonalRolesDao.findByPersonalIdFunc(id);
+    }
+    
+    public void savePersonal(){
         try
         {
-            this.personal = iPersonalDao.findByIdFunc(personalId);
-            personal.getGroups().add(iGroupDao.findByIdFunc(groupId));
-            iPersonalDao.updateFunc(personal);
+            iPersonalRolesDao.updateFunc(personalRoles);
             personalList = iPersonalDao.allFunc();
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
@@ -69,12 +70,11 @@ public class PersonalAuthBean{
         }
     }
     
-    public void deletePersonalGroup(Personal personal,GroupEntity group)
+    public void deletePersonal(Long id)
     {
         try
         {
-            personal.getGroups().remove(group);
-            iPersonalDao.updateFunc(personal);
+            iPersonalRolesDao.deleteFunc(id);
             personalList = iPersonalDao.allFunc();
             
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "BİLGİ", "İşlem Başarılı") );
@@ -102,27 +102,20 @@ public class PersonalAuthBean{
         this.personalList = personalList;
     }
 
-    public List<GroupEntity> getGroupList() {
-        return groupList;
+    public PersonalRoles getPersonalRoles() {
+        return personalRoles;
     }
 
-    public void setGroupList(List<GroupEntity> groupList) {
-        this.groupList = groupList;
-    }    
-
-    public Long getGroupId() {
-        return groupId;
+    public void setPersonalRoles(PersonalRoles personalRoles) {
+        this.personalRoles = personalRoles;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public List<PersonalRoles> getPersonalRolesList() {
+        return personalRolesList;
     }
 
-    public Long getPersonalId() {
-        return personalId;
+    public void setPersonalRolesList(List<PersonalRoles> personalRolesList) {
+        this.personalRolesList = personalRolesList;
     }
 
-    public void setPersonalId(Long personalId) {
-        this.personalId = personalId;
-    }
 }

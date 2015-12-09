@@ -31,15 +31,16 @@
                     <h:form id="dialogForm">
                         <h:panelGrid columns="2" cellpadding="5">
 
-                            <p:selectOneMenu value="#{personalAuthBean.personalId}">
+                            <p:selectOneMenu value="#{personalAuthBean.personalRoles.personalid}">
                                 <f:selectItems value="#{personalAuthBean.personalList}" var="p" itemLabel="#{p.firstname} #{p.lastname}" itemValue="#{p.id}"/>
                             </p:selectOneMenu>
 
-                            <p:selectOneMenu value="#{personalAuthBean.groupId}">
-                                <f:selectItems value="#{personalAuthBean.groupList}" var="p" itemLabel="#{p.name}" itemValue="#{p.id}"/>
+                            <p:selectOneMenu value="#{personalAuthBean.personalRoles.name}">
+                                <f:selectItem itemLabel="ROLE_USER" itemValue="ROLE_USER" />
+                                <f:selectItem itemLabel="ROLE_ADMIN" itemValue="ROLE_ADMIN" />
                             </p:selectOneMenu>
                             
-                            <p:commandButton actionListener="#{personalAuthBean.updatePersonal()}"  onclick="PF('dlg2').hide();" update=":growl1:growl,:dataForm:dataTabledata" value="Kaydet"></p:commandButton>
+                            <p:commandButton actionListener="#{personalAuthBean.savePersonal()}"  onclick="PF('dlg2').hide();" update=":growl1:growl,:dataForm:dataTabledata" value="Kaydet"></p:commandButton>
                         </h:panelGrid>
                        
                     </h:form>
@@ -63,14 +64,14 @@
                             <h:outputText value="#{personal.email}" />
                         </p:column>
                         
-                        <p:column headerText="Yetki Grupları">
-                            <p:dataTable var="group" value="#{personal.groups}">
-                                <p:column headerText="Grup Adı">
+                        <p:column headerText="Yetkiler">
+                            <p:dataTable var="group" value="#{personalAuthBean.getRoles(personal.id)}">
+                                <p:column headerText="Adı">
                                     <h:outputText value="#{group.name}" />
                                 </p:column>
 
                                 <p:column headerText="#" style="width:50px;">
-                                    <p:commandButton actionListener="#{personalAuthBean.deletePersonalGroup(personal, group)}" update=":growl1:growl,:dataForm:dataTabledata" value="Sil"></p:commandButton>
+                                    <p:commandButton actionListener="#{personalAuthBean.deletePersonal(group.id)}" update=":growl1:growl,:dataForm:dataTabledata" value="Sil"></p:commandButton>
                         
                                 </p:column>
 

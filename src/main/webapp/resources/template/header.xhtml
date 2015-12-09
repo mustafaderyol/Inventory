@@ -123,22 +123,14 @@
                                     </ul>
                                     <!-- /.nav-second-level -->
                                 </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-wrench"></i> Yetki Yönetimi<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-second-level">
-                                        <li>
-                                            <a href="authority.xhtml">Yetkiler</a>
-                                        </li>
-                                        <li>
-                                            <a href="group.xhtml">Yetki Grupları</a>
-                                        </li>
-                                        <li>
-                                            <a href="personalAuth.xhtml">Kullanıcı Yetkilendirme</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-second-level -->
-                                </li>
-                               
+                                
+                                <sec:authorize ifAllGranted="ROLE_ADMIN">
+                                 
+                                    <li>
+                                        <a href="personalAuth.xhtml">Kullanıcı Yetkilendirme</a>
+                                    </li>
+                                    
+                                </sec:authorize>
                             </ul>
                         </div>
                         <!-- /.sidebar-collapse -->

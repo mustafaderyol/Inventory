@@ -14,7 +14,8 @@ import javax.persistence.NamedQuery;
  */
 @Entity(name="PERSONALROLES")
 @NamedQueries({
-    @NamedQuery(name="allPersonalRoles",query="SELECT a FROM PERSONALROLES a")
+    @NamedQuery(name="allPersonalRoles",query="SELECT a FROM PERSONALROLES a"),
+    @NamedQuery(name="allPersonalRolesByPersonalId",query="SELECT a FROM PERSONALROLES a WHERE a.personalid=:id")
 })
 public class PersonalRoles {
     private static final long serialVersionUID = 1L;
@@ -52,6 +53,14 @@ public class PersonalRoles {
 
     public void setPersonalid(Long personalid) {
         this.personalid = personalid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
    
 }
