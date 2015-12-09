@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                            http://www.springframework.org/schema/beans/spring-beans.xsd 
+                            http://www.springframework.org/schema/context 
+                            http://www.springframework.org/schema/context/spring-context.xsd 
+                            http://www.springframework.org/schema/tx 
+                            http://www.springframework.org/schema/tx/spring-tx.xsd 
+                            http://www.springframework.org/schema/mvc 
+                            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                            http://www.springframework.org/schema/security 
+                            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 
     <context:annotation-config/>
     <context:component-scan base-package="com.mustafaderyol.inventory"/>
     <tx:annotation-driven/>
     <mvc:annotation-driven/>
+    
+    <security:http auto-config="true" use-expressions="true">
+
+        <security:intercept-url pattern="/login.xhtml" access="permitAll" />
+        <security:intercept-url pattern="/rest/*" access="permitAll" />
+        <security:intercept-url pattern="/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+
+        <security:form-login login-processing-url="/j_spring_security_check" login-page="/login.xhtml"
+                             default-target-url="/dashboard.xhtml" authentication-failure-url="/login.xhtml"/>
+        <security:logout invalidate-session="true" logout-success-url="/login.xhtml" />
+
+    </security:http>
+
+    <security:authentication-manager>
+
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query="select EMAIL, PASSWORD as password, 'true' as enabled from PERSONAL where EMAIL=?"
+                                        authorities-by-username-query="select p.EMAIL, r.NAME from PERSONAL p, PERSONALROLES r
+                                        where p.ID = r.PERSONALID and p.EMAIL=?"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -34,5 +67,6 @@
         <property name="generateDdl" value="true"/>
         <property name="database" value="MYSQL"/>
     </bean>
+    
 
 </beans>

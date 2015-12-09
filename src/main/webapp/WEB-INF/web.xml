@@ -9,6 +9,10 @@
         <param-value>/WEB-INF/spring-conf.xml</param-value>
     </context-param>
     <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/spring-security.taglib.xml</param-value>
+    </context-param>
+    <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bluesky</param-value>
     </context-param>
@@ -22,6 +26,17 @@
             org.springframework.web.context.request.RequestContextListener
         </listener-class>
     </listener>
+  <!-- Spring Security -->  
+  <filter>  
+    <filter-name>springSecurityFilterChain</filter-name>  
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+  </filter>  
+  <filter-mapping>  
+    <filter-name>springSecurityFilterChain</filter-name>  
+    <url-pattern>/*</url-pattern>  
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>  
 
     <servlet>
         <servlet-name>rest</servlet-name>
@@ -44,14 +59,18 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/403.xhtml</location>
+    </error-page>
     <welcome-file-list>
-        <welcome-file>faces/login.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>
