@@ -29,11 +29,11 @@
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
                             <a href="#">
-                                <sec:authorize ifAllGranted="ROLE_USER">
-                                    KULANICI
-                                </sec:authorize>
                                 <sec:authorize ifAllGranted="ROLE_ADMIN">
                                     ADMİN
+                                </sec:authorize>
+                                <sec:authorize ifAllGranted="ROLE_USER">
+                                    KULLANICI
                                 </sec:authorize>
                             </a>
                         </li>
@@ -42,11 +42,6 @@
                                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                                </li>
-                                <li class="divider"></li>
                                 <li>
                                     <h:outputLink value="#{request.contextPath}/j_spring_security_logout"><i class="fa fa-sign-out"></i> Çıkış</h:outputLink>
                                 </li>
@@ -75,7 +70,7 @@
                                     <a href="dashboard.xhtml"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-cubs"></i> Envanter<span class="fa arrow"></span></a>
+                                    <a href="#"><i class="fa fa-desktop fa-fw"></i> Envanter<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <ui:repeat value="#{headerMenuBean.categoryList}" var="item">
                                             <li>
@@ -127,7 +122,7 @@
                                 <sec:authorize ifAllGranted="ROLE_ADMIN">
                                  
                                     <li>
-                                        <a href="personalAuth.xhtml">Kullanıcı Yetkilendirme</a>
+                                        <a href="personalAuth.xhtml"><i class="fa fa-cogs"></i> Kullanıcı Yetkilendirme</a>
                                     </li>
                                     
                                 </sec:authorize>

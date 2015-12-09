@@ -20,8 +20,39 @@
                         <p:menuitem value="Dashboard" url="dashboard.xhtml" />
                     </p:breadCrumb>
                 </h:form>
-                Dashboard
-                
+                <br/>
+                <div class="container-fluid">
+                    <div class="row">
+                        
+                        <ui:repeat value="#{categoryBean.categoryList}" var="category" varStatus="status">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <p:panelGrid style="width: 100%; margin-bottom: 10px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="2">#{category.name}</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column style="font-weight: bold;">Kayıtlı Envanter Sayısı</p:column>
+
+                                        <p:column>#{dashboardBean.countSavedInventoryByCatogory(category.id)}</p:column>
+                                    </p:row>
+
+
+                                    <f:facet name="footer">
+                                        <p:row>
+                                            <p:column colspan="2">
+                                            </p:column>
+                                        </p:row>
+
+                                    </f:facet>
+                                </p:panelGrid>
+                            </div>
+                      </ui:repeat>
+
+                    </div>
+                </div>
             </ui:define>
         </ui:decorate>
     </h:body>

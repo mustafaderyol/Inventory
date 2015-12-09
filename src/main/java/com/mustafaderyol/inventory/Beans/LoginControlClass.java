@@ -26,7 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @ManagedBean
 @SessionScoped
 public class LoginControlClass {
-
+    
    public String doLogin(ActionEvent event) throws ServletException, IOException {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -37,7 +37,7 @@ public class LoginControlClass {
                 (ServletResponse) context.getResponse());
 
         FacesContext.getCurrentInstance().responseComplete();
-
+        
         return null;
     }
 
