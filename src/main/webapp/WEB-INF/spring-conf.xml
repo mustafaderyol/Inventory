@@ -22,10 +22,10 @@
     <tx:annotation-driven/>
     <mvc:annotation-driven/>
     
-    <security:http auto-config="true" use-expressions="true">
+    <security:http auto-config="true" use-expressions="true" create-session="stateless">
 
         <security:intercept-url pattern="/login.xhtml" access="permitAll" />
-        <security:intercept-url pattern="/rest/*" access="permitAll" />
+        <security:intercept-url pattern="/rest/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
         <security:intercept-url pattern="/personalAuth.xhtml" access="hasAnyRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
 
@@ -69,5 +69,5 @@
         <property name="database" value="MYSQL"/>
     </bean>
     
-
+    
 </beans>
