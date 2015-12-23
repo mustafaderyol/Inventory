@@ -22,7 +22,8 @@ import javax.persistence.TemporalType;
 @Entity(name="PERSONAL")
 @NamedQueries
 ({
-    @NamedQuery(name="allPersonal", query="SELECT d FROM PERSONAL d")
+    @NamedQuery(name="allPersonal", query="SELECT d FROM PERSONAL d"),
+    @NamedQuery(name="login", query="SELECT d FROM PERSONAL d WHERE d.email = :email and d.password = :password")
 })
 public class Personal implements Serializable {
     private static final long serialVersionUID = 1L;

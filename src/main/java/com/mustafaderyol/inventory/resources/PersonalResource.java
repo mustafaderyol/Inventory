@@ -3,6 +3,7 @@ package com.mustafaderyol.inventory.resources;
 import com.mustafaderyol.inventory.entity.Personal;
 import com.mustafaderyol.inventory.idao.IPersonalDao;
 import java.util.List;
+import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,14 @@ public class PersonalResource {
     public Personal getFindById(@PathVariable Long id)
     {
         Personal personal = iPersonalDao.findByIdFunc(id);
+        return personal;
+    }
+    
+    @RequestMapping(value = "/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public Personal login(@QueryParam("email") String email, @QueryParam("password") String password )
+    {
+        Personal personal = iPersonalDao.login(email,password);
         return personal;
     }
     

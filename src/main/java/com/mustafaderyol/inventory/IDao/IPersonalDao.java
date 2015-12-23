@@ -13,5 +13,6 @@ public interface IPersonalDao {
     public void deleteFunc(Long id);
     public void updateFunc(Personal object);
     public Personal findByIdFunc(Long id);
+    public Personal login(String email, String password);
 }
 

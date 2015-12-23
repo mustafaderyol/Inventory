@@ -72,5 +72,11 @@ public class PersonalDao implements IPersonalDao{
         }
         return p;
     }
+
+    @Override
+    public Personal login(String email, String password) {
+        Query request = em.createNamedQuery("login").setParameter("email", email).setParameter("password", password);
+        return (Personal) request.getSingleResult();
+    }
     
 }
