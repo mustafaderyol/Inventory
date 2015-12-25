@@ -26,9 +26,9 @@
 
         <security:intercept-url pattern="/rest/personal/login" access="permitAll" />
         <security:intercept-url pattern="/login.xhtml" access="permitAll" />
-        <security:intercept-url pattern="/rest/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+        <security:intercept-url pattern="/rest*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
         <security:intercept-url pattern="/personalAuth.xhtml" access="hasAnyRole('ROLE_ADMIN')" />
-        <security:intercept-url pattern="/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+        <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
 
         <security:form-login login-processing-url="/j_spring_security_check" login-page="/login.xhtml"
                              default-target-url="/dashboard.xhtml" authentication-failure-url="/login.xhtml"/>
