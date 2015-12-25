@@ -2,8 +2,8 @@ package com.mustafaderyol.inventory.resources;
 
 import com.mustafaderyol.inventory.entity.Personal;
 import com.mustafaderyol.inventory.idao.IPersonalDao;
+import com.mustafaderyol.inventory.util.LoginItem;
 import java.util.List;
-import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -39,14 +39,18 @@ public class PersonalResource {
         return personal;
     }
     
-    @RequestMapping(value = "/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public Personal login(@QueryParam("email") String email, @QueryParam("password") String password )
+    public Personal login(@RequestBody LoginItem login)
     {
-        Personal personal = iPersonalDao.login(email,password);
-        return personal;
+        try
+        {
+            Personal personal = iPersonalDao.login(login.getEmail(),login.getPassword());
+            return personal;
+        }
+        catch(Exception e){}
+        return null;
     }
-    
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
