@@ -31,12 +31,12 @@
                             <h:form id="form" prependId="false">
                                 <h:panelGrid columns="2" style=" width: 100%;">
                                     <h:outputText value="Email" style="margin-left: 15px;"/>
-                                    <p:inputText style=" width: 100%; margin: 5px;" id="j_username" required="true" requiredMessage="Email alanı boş bırakılamaz..." />
+                                    <p:inputText style=" width: 100%; margin: 5px;" value="#{loginBean.personal.email}" id="j_username" required="true" requiredMessage="Email alanı boş bırakılamaz..." />
                                     
                                     <h:outputText value="Parola" style="margin-left: 15px;"/>
-                                    <p:password style=" width: 100%; margin: 5px;" id="j_password" required="true" requiredMessage="Parola alanı boş bırakılamaz..." />
+                                    <p:password style=" width: 100%; margin: 5px;" value="#{loginBean.personal.password}" id="j_password" required="true" requiredMessage="Parola alanı boş bırakılamaz..." />
                                 </h:panelGrid>
-                                <h:commandButton style=" width: 100%;" value="Giriş" actionListener="#{loginControlClass.doLogin}" class="btn btn-sm btn-success"/>
+                                <h:commandButton style=" width: 100%;" value="Giriş" actionListener="#{loginControlClass.doLogin}" action="#{loginBean.login()}" class="btn btn-sm btn-success"/>
                                 
                             </h:form>
                         </div>

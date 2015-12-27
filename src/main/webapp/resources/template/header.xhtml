@@ -29,12 +29,7 @@
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
                             <a href="#">
-                                <sec:authorize ifAllGranted="ROLE_ADMIN">
-                                    ADMİN
-                                </sec:authorize>
-                                <sec:authorize ifAllGranted="ROLE_USER">
-                                    KULLANICI
-                                </sec:authorize>
+                                #{loginBean.personal.email}
                             </a>
                         </li>
                         <li class="dropdown">
@@ -44,6 +39,9 @@
                             <ul class="dropdown-menu dropdown-user">
                                 <li>
                                     <h:outputLink value="#{request.contextPath}/j_spring_security_logout"><i class="fa fa-sign-out"></i> Çıkış</h:outputLink>
+                                </li>
+                                <li>
+                                    <a href="passwordchange.xhtml">Parola Değiştir</a>
                                 </li>
                             </ul>
                             <!-- /.dropdown-user -->
