@@ -1,3 +1,4 @@
 # Inventory
 Envanter Takip Sistemi
-Bu otomasyon JSF, Hibernate, Spring teknolojileri ile yazılmaktadır. Ayrıca "Bitirme Projesi" 'dir.
+Bu otomasyon JSF, Hibernate, Spring teknolojileri ile yazılmaktadır. 
+Bitirme Projesi
