@@ -3,6 +3,7 @@ package com.mustafaderyol.inventory.resources;
 import com.mustafaderyol.inventory.entity.Personal;
 import com.mustafaderyol.inventory.idao.IPersonalDao;
 import com.mustafaderyol.inventory.util.LoginItem;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -74,6 +75,7 @@ public class PersonalResource {
     @ResponseBody
     public Personal updatePersonal(@RequestBody Personal personal)
     {
+        personal.setCreatedDate(new Date());
         iPersonalDao.updateFunc(personal);
         return personal;
     }
