@@ -2,8 +2,13 @@ package com.mustafaderyol.inventory.resources;
 
 import com.mustafaderyol.inventory.entity.Category;
 import com.mustafaderyol.inventory.entity.Inventory;
+import com.mustafaderyol.inventory.entity.InventoryDetailCommonParameter;
+import com.mustafaderyol.inventory.entity.InventoryDetailParameter;
+import com.mustafaderyol.inventory.entity.MovementHistory;
 import com.mustafaderyol.inventory.idao.ICategoryDao;
 import com.mustafaderyol.inventory.idao.IInventoryDao;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -49,6 +54,9 @@ public class InventoryResource {
     public Inventory getFindById(@PathVariable Long id)
     {
         Inventory inventory = iInventoryDao.findByIdFunc(id);
+        inventory.setMovementHistory(new ArrayList<MovementHistory>(new HashSet<MovementHistory>( inventory.getMovementHistory() )));
+        inventory.setInventoryDetailParameter(new ArrayList<InventoryDetailParameter>(new HashSet<InventoryDetailParameter>( inventory.getInventoryDetailParameter() )));
+        inventory.setInventoryDetailCommonParameter(new ArrayList<InventoryDetailCommonParameter>(new HashSet<InventoryDetailCommonParameter>( inventory.getInventoryDetailCommonParameter() )));
         return inventory;
     }
     
