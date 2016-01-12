@@ -129,7 +129,14 @@ public class InventoryCreateBean {
         this.category = iCategoryDao.findByIdFunc(Long.parseLong(parameterOne));
         parameterList = iParameterDao.allFuncByCategory(category);
         this.inventory.setCategory(category);
+        
+        personalList = iPersonalDao.allFunc();
+        locationList = iLocationDao.allFunc();
+        unitList    =iUnitDao.allFunc();
+        commonParameterList = iCommonParameterDao.allFunc();
+        
         return this.category.getName();
+        
     }
     
     public List<Inventory> getInventoryListByCategory()
